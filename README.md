@@ -18,7 +18,7 @@ Kasper Niklas Kjær Hansen, s194267
 For this project the [Pytorch Image Models](https://github.com/rwightman/pytorch-image-models) framework is used. This framework implements state-of-the-art image models, and is a good fit for the goals of the project.
 
 ## How do you intend to include the framework in your project??
-Pytorch Image Models contains hundreds of pretrained state of the art models, which are fit to use in our project. Initially, we will use a pre-trained model in our pipeline. Using the pre-trained models will allow us to focus 
+Pytorch Image Models contains hundreds of pretrained state of the art models, which are fit to use in our project. Initially, we will use a pre-trained model in our pipeline. Using the pre-trained models will allow us to focus on implementing the various techniques taught in the course. If possible and time permits the model can be further improved for our data set.
 
 ## What data are you going to run on (initially)?
 
