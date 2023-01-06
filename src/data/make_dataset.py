@@ -7,31 +7,75 @@ from glob import glob
 from pathlib import Path
 from dotenv import find_dotenv, load_dotenv
 import torch
+from PIL import Image
 from torchvision import transforms, utils
-
+import numpy as np
+from tqdm import tqdm
 
 @click.command()
 @click.argument('input_filepath', type=click.Path(exists=True))
 @click.argument('output_filepath', type=click.Path())
-def main(input_filepath, output_filepath):
+@click.argument('image_shape', default=224, type=click.Path())
+@click.argument('norm_strat', default='model', type=click.Path())
+def main(input_filepath: str, output_filepath: str, image_shape: int, norm_strat: str) -> None:
     """ Runs data processing scripts to turn raw data from (../raw) into
         cleaned data ready to be analyzed (saved in ../processed).
     """
     logger = logging.getLogger(__name__)
     logger.info('making final data set from raw data')
 
-    # def transform_img(img: torch.Tensor) -> torch.Tensor:
-    #     mean, std = img.mean([1, 2]), img.std([1, 2])
-    #     T = transforms.Compose([
-    #      transforms.Resize((256, 256)),
-    #      transforms.Normalize(mean=mean, std=std),
-    #     ])
-    #     return T(img)
-    # flat_data = torch.flatten(T,start_dim=0, end_dim=-1)
+    # To Tensor transformer
+    transform_to_tensor = transforms.Compose([
+        transforms.ToTensor()
+    ])
 
-    data = []
-    for file in glob(input_filepath + '/*.*'):
-        logger.info(file)
+    # Datasets to iterate through
+    datasets = ["training_data", "testing_data", "validation_data", "interesting_data"]
+
+
+
+    # Perform dataset loop
+    for dataset in datasets:
+        # Variables in which images and labels are saved in an intermediate step
+        images = []
+        labels = []
+        # Iterate through all animals
+        for class_idx, animal in enumerate(glob(input_filepath + f"/{dataset}/*")):
+            print(f"animal: {animal}")
+            # iterte through all animal images
+            for file in tqdm(glob(f'{animal}/*')):
+                # load image and resize it to "image_shape"
+                image = Image.open(file).resize((image_shape, image_shape))
+                # if loaded image is different from RGB, convert it.
+                if image.mode != "RGB":
+                    image = image.convert("RGB")
+                # Add image to intermediate step variables
+                labels.append(class_idx)
+                images.append(transform_to_tensor(image))
+
+        # Stack all images into a tensor of tensors
+        images = torch.stack(images)
+
+        # Normalisation transformer
+        if norm_strat == 'model':
+            # transformer based on pre-trained model, mean and std
+            T = transforms.Compose([
+                transforms.Normalize(mean=torch.tensor([0.485, 0.456, 0.406]), std=torch.tensor([0.229, 0.224, 0.225]))
+            ])
+        else:
+            # transformer based on caluclated means and stds.
+            means = images.mean(dim=(0,2,3))
+            stds = images.std(dim=(0,2,3))
+            T = transforms.Compose([
+                transforms.Normalize(mean=means, std=stds)
+            ])
+
+        # Transform images 
+        norm_images = T(images)
+        torch_labels = torch.Tensor(labels)
+
+        with open(output_filepath + f"/{dataset}.pickle", "wb") as fp:
+            pickle.dump((norm_images, torch_labels), fp)
 
 if __name__ == '__main__':
     log_fmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
