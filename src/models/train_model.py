@@ -24,7 +24,7 @@ class dataset(Dataset):
         return len(self.data)
 
 
-@hydra.main(config_path="conf", config_name="config.yaml")
+@hydra.main(config_path="config", config_name="config.yaml")
 def train(cfg) -> None:
     log.info("Training day and night")
     model_hparams = cfg.model
@@ -45,9 +45,9 @@ def train(cfg) -> None:
     model = model.to(device)
 
     with open(train_hparams.hyperparameters.train_data_path, 'rb') as handle:
-        raw_data = pickle.load(handle)
+        image_data, images_labels = pickle.load(handle)
 
-    data = dataset(raw_data['images'], raw_data['labels'])
+    data = dataset(image_data, images_labels.long())
     dataloader = DataLoader(
         data,
         batch_size=train_hparams.hyperparameters.batch_size

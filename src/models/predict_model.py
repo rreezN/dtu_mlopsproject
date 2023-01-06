@@ -10,7 +10,7 @@ from torch.utils.data import DataLoader, Dataset
 
 class dataset(Dataset):
     def __init__(self, images, labels):
-        self.data = images.view(-1, 1, 28, 28)
+        self.data = images
         self.labels = labels
 
     def __getitem__(self, item):
@@ -33,16 +33,17 @@ def evaluate(model_filepath, test_filepath):
                               pretrained=params.model.hyperparameters.pretrained,
                               in_chans=params.model.hyperparameters.in_chans,
                               num_classes=params.model.hyperparameters.num_classes)
+
     model.load_state_dict(torch.load(model_filepath + "/trained_model.pt"))
     device = "cuda" if torch.cuda.is_available() else "cpu"
     model = model.to(device)
     model.eval()
 
     with open(test_filepath, 'rb') as handle:
-        raw_data = pickle.load(handle)
+        image_data, image_labels = pickle.load(handle)
 
-    data = dataset(raw_data['images'], raw_data['labels'])
-    dataloader = DataLoader(data, batch_size=params.training.hyperparameters.batch_size)
+    data = dataset(image_data, image_labels.long())
+    dataloader = DataLoader(data, batch_size=100)
 
     correct, total = 0, 0
     for batch in dataloader:
