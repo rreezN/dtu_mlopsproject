@@ -9,6 +9,10 @@ The goal of this project is to use the image classification model [ConvNeXt V2](
 
 ![Alt text](pictures/animals_drawing.png?raw=true "Title")
 
+test
+
+<img src="pictures/animals_drawing.png" alt="drawing" width="200"/>
+
 
 Our group (42) consists of:
 
