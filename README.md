@@ -1,4 +1,4 @@
-dtu_mlopsproject (indsæt name of project here)
+Transfer Learning on Animal Image Classification using Computer Vision
 ==============================
 
 ## Overall goals of the project
