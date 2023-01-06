@@ -42,5 +42,6 @@ We intend to use the model [ConvNeXt V2: Co-designing and Scaling ConvNets with 
 See [checklist](checklist.md).
 
 
-<p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
+<p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. </small></p>
+# cookiecutterdatascience
 # dtu_mlopsproject
