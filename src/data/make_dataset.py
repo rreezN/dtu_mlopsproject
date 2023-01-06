@@ -1,8 +1,13 @@
 # -*- coding: utf-8 -*-
 import click
 import logging
+import torch
+import pickle
+from glob import glob
 from pathlib import Path
 from dotenv import find_dotenv, load_dotenv
+import torch
+from torchvision import transforms, utils
 
 
 @click.command()
@@ -15,6 +20,18 @@ def main(input_filepath, output_filepath):
     logger = logging.getLogger(__name__)
     logger.info('making final data set from raw data')
 
+    # def transform_img(img: torch.Tensor) -> torch.Tensor:
+    #     mean, std = img.mean([1, 2]), img.std([1, 2])
+    #     T = transforms.Compose([
+    #      transforms.Resize((256, 256)),
+    #      transforms.Normalize(mean=mean, std=std),
+    #     ])
+    #     return T(img)
+    # flat_data = torch.flatten(T,start_dim=0, end_dim=-1)
+
+    data = []
+    for file in glob(input_filepath + '/*.*'):
+        logger.info(file)
 
 if __name__ == '__main__':
     log_fmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
