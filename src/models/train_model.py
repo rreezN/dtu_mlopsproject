@@ -15,7 +15,7 @@ from torch.utils.data import DataLoader, Dataset
 
 class dataset(Dataset):
     def __init__(self, images, labels):
-        self.data = images.view(-1, 1, 28, 28)
+        self.data = images
         self.labels = labels
 
     def __getitem__(self, item):
