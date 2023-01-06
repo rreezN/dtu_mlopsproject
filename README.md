@@ -19,7 +19,7 @@ For this project the [Pytorch Image Models](https://github.com/rwightman/pytorch
 Pytorch Image Models contains hundreds of pretrained state of the art models, which are fit to use in our project. Initially, we will use a pre-trained model in our pipeline. Using the pre-trained models will allow us to focus on implementing the various techniques taught in the course. If possible and time permits the model can be further improved for our data set.
 
 ## What data are you going to run on (initially)?
-For the project we are going to be working with the [Animals V2 Image Classification Data Set](https://www.kaggle.com/datasets/utkarshsaxenadn/animal-image-classification-dataset). The data set consists of 10 classes, with each class containing 2000 training images, 100 validation images, a varying amount of testing images and 6 interesting images. This means there are a total of 20000 training images and 1000 validation images
+For the project we are going to be working with the [Animals V2 Image Classification Data Set](https://www.kaggle.com/datasets/utkarshsaxenadn/animal-image-classification-dataset). The data set consists of 10 classes, with each class containing 2000 training images, 100 validation images, a varying amount of testing images and 6 interesting images. This means there are a total of 20000 training images and 1000 validation images. 
 
 | Class       |  Cat |  Cow |  Dog | Elephant | Gorilla | Hippo | Monkey | Panda | Tiger | Zebra |
 |-------------|-----:|-----:|-----:|---------:|--------:|------:|-------:|------:|------:|------:|
@@ -27,6 +27,8 @@ For the project we are going to be working with the [Animals V2 Image Classifica
 | Validation  |  100 |  100 |  100 |      100 |     100 |   100 |    100 |   100 |   100 |   100 |
 | Testing     |  394 |  177 |   88 |      306 |      30 |    57 |    184 |   237 |   164 |   270 |
 | Interesting |    6 |    6 |    6 |        6 |       6 |     6 |      6 |     6 |     6 |     6 |
+
+The images vary in size and thus need to be transformed to fit the model.
 
 ## What deep learning models do you expect to use?
 We intend to use the model [ConvNeXt-V2](https://arxiv.org/abs/2301.00808), which is a recent update to the original ConvNeXt. The model contains 
