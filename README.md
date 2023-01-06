@@ -1,4 +1,4 @@
-Transfer Learning on Animal Image Classification using Computer Vision
+Machine Learning Operations with ConvNeXt2: A Case Study in Classification of Animal Images
 ==============================
 
 ## Overall goals of the project
