@@ -14,7 +14,7 @@ log = logging.getLogger(__name__)
 
 class dataset(Dataset):
     def __init__(self, images: torch.Tensor, labels: torch.Tensor) -> None:
-        self.data = images.view(-1, 1, 28, 28)
+        self.data = images
         self.labels = labels
 
     def __getitem__(self, item: int) -> Tuple[torch.Tensor, torch.Tensor]:
