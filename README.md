@@ -31,7 +31,7 @@ For the project we are going to be working with the [Animals V2 Image Classifica
 The images vary in size and thus need to be transformed to a standard size.
 
 ## What deep learning models do you expect to use?
-We intend to use the model [ConvNeXt-V2](https://arxiv.org/abs/2301.00808), which is a recent update to the original ConvNeXt. The model contains 
+We intend to use the model [ConvNeXt-V2](https://arxiv.org/abs/2301.00808), which is a recent update to the original ConvNeXt. The model contains pre-trained models of different sizes. 
 
 --------
 
