@@ -50,20 +50,20 @@ end of the project.
 
 ### Week 1
 
-* [ ] Create a git repository
-* [ ] Make sure that all team members have write access to the github repository
-* [ ] Create a dedicated environment for you project to keep track of your packages
-* [ ] Create the initial file structure using cookiecutter
-* [ ] Fill out the `make_dataset.py` file such that it downloads whatever data you need and
-* [ ] Add a model file and a training script and get that running
+* [X] Create a git repository
+* [X] Make sure that all team members have write access to the github repository
+* [X] Create a dedicated environment for you project to keep track of your packages
+* [X] Create the initial file structure using cookiecutter
+* [X] Fill out the `make_dataset.py` file such that it downloads whatever data you need and
+* [X] Add a model file and a training script and get that running
 * [ ] Remember to fill out the `requirements.txt` file with whatever dependencies that you are using
-* [ ] Remember to comply with good coding practices (`pep8`) while doing the project
-* [ ] Do a bit of code typing and remember to document essential parts of your code
+* [X] Remember to comply with good coding practices (`pep8`) while doing the project
+* [X] Do a bit of code typing and remember to document essential parts of your code
 * [ ] Setup version control for your data or part of your data
 * [ ] Construct one or multiple docker files for your code
 * [ ] Build the docker files locally and make sure they work as intended
-* [ ] Write one or multiple configurations files for your experiments
-* [ ] Used Hydra to load the configurations and manage your hyperparameters
+* [X] Write one or multiple configurations files for your experiments
+* [X] Used Hydra to load the configurations and manage your hyperparameters
 * [ ] When you have something that works somewhat, remember at some point to to some profiling and see if
       you can optimize your code
 * [ ] Use Weights & Biases to log training progress and other important metrics/artifacts in your code. Additionally,
@@ -105,7 +105,7 @@ end of the project.
 >
 > Answer:
 
---- question 1 fill here ---
+42
 
 ### Question 2
 > **Enter the study number for each member in the group**
@@ -116,7 +116,7 @@ end of the project.
 >
 > Answer:
 
---- question 2 fill here ---
+s194237, 194246, s194247, s194249, s194267
 
 ### Question 3
 > **What framework did you choose to work with and did it help you complete the project?**
@@ -129,7 +129,7 @@ end of the project.
 >
 > Answer:
 
---- question 3 fill here ---
+We used the framework [Pytorch Image Models](https://github.com/rwightman/pytorch-image-models). This framework implements state-of-the-art image models, and is a good fit for the goals of the project. In the framework there hundreds of pretrained state of the art models, which are fit to use in our project. Initially, we will use a pre-trained model in our pipeline. Using the pre-trained model will allow us to focus on implementing the various techniques taught in the course. The models are implemented in a way that allows to specify various parameters, including but not limited to changing the number of in and out channels, regularisation parameters such as dropout and more.
 
 ## Coding environment
 
@@ -174,7 +174,7 @@ end of the project.
 >
 > Answer:
 
---- question 6 fill here ---
+We adhered to the pep8 standard format for python code. It is important to have a guideline for how could should be written and formatted in large projects, especially when a lot of people will be working with it. The guideline serves to standardise the code, such that it is easier to process and understand when new members of the project look at the code (or you return after a year of not looking at it). Furthermore, standardised code can also entail using comments in a certain way, i.e. to explain why something is implemented the way it is.
 
 ## Version control
 
