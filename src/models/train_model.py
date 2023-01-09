@@ -4,9 +4,11 @@ import pickle
 from typing import Tuple
 
 import hydra
-import matplotlib.pyplot as plt
-import timm
 import torch
+from model import MyAwesomeConvNext
+from pytorch_lightning import Trainer
+from pytorch_lightning.callbacks import EarlyStopping, ModelCheckpoint
+from pytorch_lightning.loggers import WandbLogger
 from torch.utils.data import DataLoader, Dataset
 
 log = logging.getLogger(__name__)
@@ -33,54 +35,45 @@ def train(cfg) -> None:
     log.info(train_hparams.hyperparameters.lr)
     torch.manual_seed(train_hparams.hyperparameters.seed)
 
-    model = timm.create_model(
-        model_hparams.hyperparameters.model_name,
+    model = MyAwesomeConvNext(
+        model_name=model_hparams.hyperparameters.model_name,
         pretrained=model_hparams.hyperparameters.pretrained,
         in_chans=model_hparams.hyperparameters.in_chans,
-        num_classes=model_hparams.hyperparameters.num_classes
+        num_classes=model_hparams.hyperparameters.num_classes,
+        lr=train_hparams.hyperparameters.lr
     )
 
-    device = "cuda" if train_hparams.hyperparameters.cuda else "cpu"
-    log.info(f"device: {device}")
-    model = model.to(device)
+    checkpoint_callback = ModelCheckpoint(
+        dirpath="./models", monitor="train_loss", mode="min"
+    )
+
+    early_stopping_callback = EarlyStopping(
+        monitor="train_loss", patience=10, verbose=True, mode="min"
+    )
+    accelerator = "gpu" if train_hparams.hyperparameters.cuda else "cpu"
+    trainer = Trainer(
+        devices=1,
+        accelerator=accelerator,
+        max_epochs=train_hparams.hyperparameters.epochs,
+        limit_train_batches=0.2,
+        callbacks=[checkpoint_callback, early_stopping_callback],
+        logger=WandbLogger(project="dtu-mlopsproject"),
+        precision=16,
+    )
+
+    log.info(f"device (accelerator): {accelerator}")
 
     with open(train_hparams.hyperparameters.train_data_path, 'rb') as handle:
         image_data, images_labels = pickle.load(handle)
 
     data = dataset(image_data, images_labels.long())
-    dataloader = DataLoader(
+    train_loader = DataLoader(
         data,
         batch_size=train_hparams.hyperparameters.batch_size
     )
-    optimizer = torch.optim.Adam(
-        model.parameters(),
-        lr=train_hparams.hyperparameters.lr
-    )
-    criterion = torch.nn.CrossEntropyLoss()
 
-    n_epoch = train_hparams.hyperparameters.epochs
-    loss_tracker = []
-
-    for epoch in range(n_epoch):
-        running_loss = 0
-        for batch in dataloader:
-            optimizer.zero_grad()
-            x, y = batch
-            preds = model(x.to(device))
-            loss = criterion(preds, y.to(device))
-            loss.backward()
-            optimizer.step()
-            running_loss += loss.item()
-        loss_tracker.append(running_loss/len(dataloader))
-        log.info(
-            f"Epoch {epoch+1}/{n_epoch}. Loss: {running_loss/len(dataloader)}"
-        )
+    trainer.fit(model, train_dataloaders=train_loader)
     torch.save(model, f"{os.getcwd()}/trained_model.pt")
-
-    plt.plot(loss_tracker, '-')
-    plt.xlabel('Training step')
-    plt.ylabel('Training loss')
-    plt.savefig(f"{os.getcwd()}/training_curve.png")
 
 
 if __name__ == "__main__":
