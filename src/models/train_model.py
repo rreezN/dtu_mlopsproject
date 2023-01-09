@@ -57,21 +57,21 @@ def train(cfg) -> None:
         max_epochs=train_hparams.hyperparameters.epochs,
         limit_train_batches=0.2,
         callbacks=[checkpoint_callback, early_stopping_callback],
-        logger=WandbLogger(project="dtu-mlopsproject"),
-        precision=16,
+        logger=WandbLogger(project="first train test", entity="dtu-mlopsproject"),
+        # precision=16,
     )
 
     log.info(f"device (accelerator): {accelerator}")
 
     with open(train_hparams.hyperparameters.train_data_path, 'rb') as handle:
         image_data, images_labels = pickle.load(handle)
-
+    log.info("Data loaded")
     data = dataset(image_data, images_labels.long())
     train_loader = DataLoader(
         data,
         batch_size=train_hparams.hyperparameters.batch_size
     )
-
+    log.info("Dataset created")
     trainer.fit(model, train_dataloaders=train_loader)
     torch.save(model, f"{os.getcwd()}/trained_model.pt")
 

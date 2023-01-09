@@ -4,6 +4,6 @@ hyperparameters:
         lr: 1e-3
         epochs: 20
         seed: 42
-        cuda: True
+        cuda: False
         train_data_path: '../../../data/processed/training_data.pickle'
         model_out_path: '../../../models/'
