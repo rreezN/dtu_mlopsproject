@@ -5,7 +5,7 @@ Machine Learning Operations with ConvNeXt2: A Case Study in Classification of An
 [<img src="https://img.shields.io/badge/GoogleCloud-%234285F4.svg?style=for-the-badge&logo=google-cloud&logoColor=white">](https://i.redd.it/hyyapbqpp3v91.jpg)
 
 ## Overall goals of the project
-The goal of this project is to use the image classification model [ConvNeXt V2](https://arxiv.org/abs/2301.00808) to classify a 10 class animal data set from the [Animals - V2](https://www.kaggle.com/datasets/utkarshsaxenadn/animal-image-classification-dataset).
+The goal of this project is to use the image classification model [ConvNeXt V2](https://arxiv.org/abs/2301.00808) to classify a 10 class animal data set from [Animals - V2](https://www.kaggle.com/datasets/utkarshsaxenadn/animal-image-classification-dataset).
 
 <img src="pictures/animals_drawing.png" alt="drawing" width="300"/>
 
@@ -36,7 +36,7 @@ For the project we are going to be working with the [Animals V2 Image Classifica
 The images vary in size and thus need to be transformed to a standard size.
 
 ## What deep learning models do you expect to use?
-We intend to use the model [ConvNeXt V2: Co-designing and Scaling ConvNets with Masked Autoencoders](https://arxiv.org/abs/2301.00808), which is a recent update to the original ConvNeXt. The model contains pre-trained models of different sizes, we will be using the pretrained 3.7 million parameter model, Atto.
+We intend to use the model [ConvNeXt V2: Co-designing and Scaling ConvNets with Masked Autoencoders](https://arxiv.org/abs/2301.00808), which is a recent update to the original ConvNeXt. The model contains pre-trained models of different sizes, of which we will be using the pretrained 3.7 million parameter model, Atto.
 
 --------
 See [checklist](checklist.md).

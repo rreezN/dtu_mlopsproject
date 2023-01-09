@@ -47,7 +47,7 @@ def main(
         for c_idx, animal in enumerate(glob(input_filepath + f"/{dataset}/*")):
             print(f"animal: {animal}")
             # iterte through all animal images
-            for file in tqdm(glob(f'{animal}/*')):
+            for file in tqdm(glob(f'{animal}/*')[:1500]):
                 # load image and resize it to "image_shape"
                 image = Image.open(file).resize((image_shape, image_shape))
                 # if loaded image is different from RGB, convert it.
