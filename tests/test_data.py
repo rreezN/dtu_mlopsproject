@@ -14,7 +14,7 @@ import os.path
 
 class dataset(Dataset):
     def __init__(self, images, labels):
-        self.data = images.view(-1, 1, 28, 28)
+        self.data = images
         self.labels = labels
 
     def __getitem__(self, item):
@@ -37,19 +37,19 @@ class TestClass:
 
     @pytest.mark.skipif(
         not os.path.exists(
-            os.path.join(_PATH_DATA, "processed/interesting_data.pickle")
+            os.path.join(_PATH_DATA, "processed/training_data.pickle")
         ),
         reason="Data files not found",
     )
     def test_train(self):
         # load data
         dataset = data_load(
-            os.path.join(_PATH_DATA, "processed/interesting_data.pickle")
+            os.path.join(_PATH_DATA, "processed/training_data.pickle")
         )
         # Ensure correct data-size
-        assert len(dataset.data) == self.N_train, "Data is incomplete"
+        assert len(dataset) == self.N_train, "Data is incomplete"
         # Ensure correct data shape
-        assert dataset.data.shape == (self.N_train, 1, 224, 224), "Data is of wrong shape"
+        assert dataset.data.shape == (self.N_train, 3, 224, 224), "Data is of wrong shape"
         # Ensure number of labels correspond to number of images
         assert len(dataset.labels) == len(
             dataset.data
@@ -71,9 +71,9 @@ class TestClass:
             os.path.join(_PATH_DATA, "processed/testing_data.pickle")
         )
         # Ensure correct data-size
-        assert len(dataset.data) == self.N_test, "Data is incomplete"
+        assert len(dataset) == self.N_test, "Data is incomplete"
         # Ensure correct data shape
-        assert dataset.data.shape == (self.N_test, 1, 224, 224), "Data is of wrong shape"
+        assert dataset.data.shape == (self.N_test, 3, 224, 224), "Data is of wrong shape"
         # Ensure number of labels correspond to number of images
         assert len(dataset.labels) == len(
             dataset.data
@@ -89,15 +89,15 @@ class TestClass:
                            ),
         reason="Data files not found",
     )
-    def test_test(self):
+    def test_val(self):
         # load data
         dataset = data_load(
             os.path.join(_PATH_DATA, "processed/validation_data.pickle")
         )
         # Ensure correct data-size
-        assert len(dataset.data) == self.N_val, "Data is incomplete"
+        assert len(dataset) == self.N_val, "Data is incomplete"
         # Ensure correct data shape
-        assert dataset.data.shape == (self.N_val, 1, 224, 224), "Data is of wrong shape"
+        assert dataset.data.shape == (self.N_val, 3, 224, 224), "Data is of wrong shape"
         # Ensure number of labels correspond to number of images
         assert len(dataset.labels) == len(
             dataset.data
