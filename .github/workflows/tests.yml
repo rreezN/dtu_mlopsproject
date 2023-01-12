@@ -51,4 +51,5 @@ jobs:
     - name: Test with pytest
       run: |
         pip install pytest
+        wandb disabled
         pytest -v
