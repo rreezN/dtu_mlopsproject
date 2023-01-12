@@ -78,6 +78,10 @@ target/
 # exclude data from source control by default
 /data/
 
+# exclude model outputs from hydra
+outputs/
+src/models/outputs/
+
 # Mac OS-specific storage files
 .DS_Store
 

@@ -1,4 +1,4 @@
-name: "Run tests"
+name: "Run CodeCov"
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}-${{ github.head_ref }}
   cancel-in-progress: true
-
+  
 jobs:
   build:
 
@@ -47,9 +47,12 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         pip install -r requirements_tests.txt
-
-    - name: Test with pytest
+    - name: Generate Report
       run: |
+        pip install coverage
         pip install pytest
         wandb disabled
-        pytest -v
+        coverage run -m pytest tests/
+        coverage report -m --omit=*/__init__.py
+    - name: Upload Coverage to Codecov
+      uses: codecov/codecov-action@v2
