@@ -43,7 +43,7 @@ def train(cfg) -> None:
         pretrained=model_hparams.hyperparameters.pretrained,
         in_chans=model_hparams.hyperparameters.in_chans,
         num_classes=model_hparams.hyperparameters.num_classes,
-        lr=train_hparams.hyperparameters.lr
+        lr=train_hparams.hyperparameters.lr,
     )
 
     checkpoint_callback = ModelCheckpoint(
@@ -54,7 +54,9 @@ def train(cfg) -> None:
         monitor="train_loss", patience=10, verbose=True, mode="min"
     )
     accelerator = "gpu" if train_hparams.hyperparameters.cuda else "cpu"
-    wandb_logger = WandbLogger(project="KomNuKristian", entity="dtu-mlopsproject", log_model="all")
+    wandb_logger = WandbLogger(
+        project="KomNuKristian", entity="dtu-mlopsproject", log_model="all"
+    )
     for key, val in train_hparams.hyperparameters.items():
         wandb_logger.experiment.config[key] = val
     trainer = Trainer(
@@ -70,14 +72,12 @@ def train(cfg) -> None:
 
     log.info(f"device (accelerator): {accelerator}")
 
-    with open(train_hparams.hyperparameters.train_data_path, 'rb') as handle:
+    with open(train_hparams.hyperparameters.train_data_path, "rb") as handle:
         image_data, images_labels = pickle.load(handle)
 
     data = dataset(image_data, images_labels.long())
     train_loader = DataLoader(
-        data,
-        batch_size=train_hparams.hyperparameters.batch_size,
-        num_workers=8
+        data, batch_size=train_hparams.hyperparameters.batch_size, num_workers=8
     )
 
     trainer.fit(model, train_dataloaders=train_loader)
