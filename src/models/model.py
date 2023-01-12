@@ -26,7 +26,7 @@ class MyAwesomeConvNext(LightningModule):
         if x.ndim != 4:
             raise ValueError("Expected input to a 4D tensor")
         if x.shape[1] != 3 or x.shape[2] != 224 or x.shape[3] != 224:
-            raise ValueError("Expected each sample to have shape [3, 224, 224]")
+            raise ValueError("Expected each sample to have shape {3, 224, 224}")
 
         return self.model(x)
 

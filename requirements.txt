@@ -11,3 +11,13 @@ torch==1.13.1
 torchvision==0.14.1
 torchviz==0.0.2
 tqdm==4.64.1
+cookiecutter
+flake8
+isort
+dvc
+dvc[gdrive]
+dvc[gs]
+wandb
+coverage
+pre-commit
+pytest
