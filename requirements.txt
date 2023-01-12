@@ -14,4 +14,3 @@ wandb
 coverage
 pre-commit
 hydra-core
-pytorch_lightning
