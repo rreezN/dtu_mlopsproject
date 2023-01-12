@@ -13,6 +13,7 @@ class MyAwesomeConvNext(LightningModule):
             num_classes: int,
             lr: float = 1e-3):
         super().__init__()
+        self.save_hyperparameters()
         self.model = timm.create_model(
                             model_name,
                             pretrained=pretrained,
@@ -24,7 +25,6 @@ class MyAwesomeConvNext(LightningModule):
     def forward(self, x):
         if x.ndim != 4:
             raise ValueError("Expected input to a 4D tensor")
-
         if x.shape[1] != 3 or x.shape[2] != 224 or x.shape[3] != 224:
             raise ValueError("Expected each sample to have shape {3, 224, 224}")
 

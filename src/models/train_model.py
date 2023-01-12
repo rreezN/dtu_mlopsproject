@@ -32,7 +32,10 @@ def train(cfg) -> None:
     model_hparams = cfg.model
     train_hparams = cfg.training
 
-    log.info(train_hparams.hyperparameters.lr)
+    print(cfg.training)
+
+    # log.info("lr:", train_hparams.hyperparameters.lr)
+    # log.info("batch size:", train_hparams.hyperparameters.batch_size)
     torch.manual_seed(train_hparams.hyperparameters.seed)
 
     model = MyAwesomeConvNext(
@@ -51,14 +54,18 @@ def train(cfg) -> None:
         monitor="train_loss", patience=10, verbose=True, mode="min"
     )
     accelerator = "gpu" if train_hparams.hyperparameters.cuda else "cpu"
+    wandb_logger = WandbLogger(project="KomNuKristian", entity="dtu-mlopsproject", log_model="all")
+    for key, val in train_hparams.hyperparameters.items():
+        wandb_logger.experiment.config[key] = val
     trainer = Trainer(
         devices=1,
         accelerator=accelerator,
         max_epochs=train_hparams.hyperparameters.epochs,
         limit_train_batches=0.2,
+        log_every_n_steps=1,
         callbacks=[checkpoint_callback, early_stopping_callback],
-        logger=WandbLogger(project="dtu-mlopsproject"),
-        precision=16,
+        logger=wandb_logger,
+        # precision=16,
     )
 
     log.info(f"device (accelerator): {accelerator}")
@@ -69,7 +76,8 @@ def train(cfg) -> None:
     data = dataset(image_data, images_labels.long())
     train_loader = DataLoader(
         data,
-        batch_size=train_hparams.hyperparameters.batch_size
+        batch_size=train_hparams.hyperparameters.batch_size,
+        num_workers=8
     )
 
     trainer.fit(model, train_dataloaders=train_loader)
