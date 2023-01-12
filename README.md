@@ -17,7 +17,7 @@ The goal of this project is to use the image classification model [ConvNeXt V2](
 
 
 <p align="center">
-  <img src="pictures/wide_animals_drawing.png" alt="drawing" width="700"/>
+  <img align="right" src="pictures/wide_animals_drawing.png" alt="drawing" width="600"/>
 </p>
 
 Our group (42) consists of:
