@@ -28,10 +28,10 @@ point on the checklist for the exam.
 ### Week 2
 
 * [X] Write unit tests related to the data part of your code (*don't make sense to account for it on github, as data won't be available there*)
-* [ ] Write unit tests related to model construction and or model training
+* [X] Write unit tests related to model construction and or model training (*done for model construction*)
 * [X] Calculate the coverage. (*done with CodeCov, including ReadMe embed*)
-* [ ] Get some continuous integration running on the github repository
-* [ ] Create a data storage in GCP Bucket for you data and preferable link this with your data version control setup
+* [X] Get some continuous integration running on the github repository
+* [X] Create a data storage in GCP Bucket for you data and preferable link this with your data version control setup
 * [ ] Create a trigger workflow for automatically building your docker images
 * [ ] Get your model training in GCP using either the Engine or Vertex AI
 * [ ] Create a FastAPI application that can do inference using your model
