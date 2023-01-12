@@ -1,0 +1,15 @@
+program: src/models/train_model.py
+method: bayes
+metric:
+  goal: minimize
+  name: loss
+parameters:
+  training.hyperparameters.lr:
+    values: [2, 3]
+  training.hyperparameters.batch_size:
+    values: [16, 32]
+
+command:
+  - python3
+  - ${program}
+  - ${args_no_hyphens}
