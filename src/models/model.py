@@ -6,19 +6,21 @@ import timm
 
 class MyAwesomeConvNext(LightningModule):
     def __init__(
-            self,
-            model_name: str,
-            pretrained: bool,
-            in_chans: int,
-            num_classes: int,
-            lr: float = 1e-3):
+        self,
+        model_name: str,
+        pretrained: bool,
+        in_chans: int,
+        num_classes: int,
+        lr: float = 1e-3,
+    ):
         super().__init__()
         self.save_hyperparameters()
         self.model = timm.create_model(
-                            model_name,
-                            pretrained=pretrained,
-                            in_chans=in_chans,
-                            num_classes=num_classes)
+            model_name,
+            pretrained=pretrained,
+            in_chans=in_chans,
+            num_classes=num_classes,
+        )
         self.lr = lr
         self.criterion = nn.CrossEntropyLoss()
 

@@ -12,4 +12,4 @@ def rename(path: str):
 
 
 if __name__ == "__main__":
-    rename('../../data/raw')
+    rename("../../data/raw")
