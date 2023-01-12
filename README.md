@@ -7,6 +7,8 @@ Machine Learning Operations with ConvNeXt2: A Case Study in Classification of An
 ## Overall goals of the project
 The goal of this project is to use the image classification model [ConvNeXt V2](https://arxiv.org/abs/2301.00808) to classify a 10 class animal data set from [Animals - V2](https://www.kaggle.com/datasets/utkarshsaxenadn/animal-image-classification-dataset).
 
+![GitHub CI](https://github.com/rreezN/dtu_mlopsproject/.github/workflows/flake8.yml/badge.svg)
+
 <img src="pictures/animals_drawing.png" alt="drawing" width="300"/>
 
 Our group (42) consists of:
