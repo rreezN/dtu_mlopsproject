@@ -41,7 +41,7 @@ class TestClass:
         ),
         reason="Data files not found",
     )
-    def test_train(self):
+    def test_train_data(self):
         # load data
         dataset = data_load(
             os.path.join(_PATH_DATA, "processed/training_data.pickle")
@@ -65,7 +65,7 @@ class TestClass:
         ),
         reason="Data files not found",
     )
-    def test_test(self):
+    def test_test_data(self):
         # load data
         dataset = data_load(
             os.path.join(_PATH_DATA, "processed/testing_data.pickle")
@@ -89,7 +89,7 @@ class TestClass:
                            ),
         reason="Data files not found",
     )
-    def test_val(self):
+    def test_val_data(self):
         # load data
         dataset = data_load(
             os.path.join(_PATH_DATA, "processed/validation_data.pickle")
