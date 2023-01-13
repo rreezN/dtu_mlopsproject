@@ -148,7 +148,7 @@ We used the framework [Pytorch Image Models](https://github.com/rwightman/pytorc
 >
 > Answer:
 
---- question 4 fill here ---
+To manage the dependencies in our project, we used the pipreqs package. This ensured that all dependencies were accounted for while reducing the length of the requirements.txt file as much as possible. To setup working on the project, it is required to build a virtual environment, run pip install --upgrade pip and then run python -m pip install -r requirements.txt. Next the new user should use the installed dvc package to pull data from Google Storage, by running “git pull” followed by “dvc pull”. Now everything should be setup correctly and be ready to train models etc.
 
 ### Question 5
 
@@ -163,7 +163,7 @@ We used the framework [Pytorch Image Models](https://github.com/rwightman/pytorc
 > *experiments.*
 > Answer:
 
---- question 5 fill here ---
+To adhere with the cookiecutter template, all code in the project is contained within the src/ folder. All files which are initially present within the template have been altered, namely: make_data.py, model.py, train_model.py and predict_model.py. We also added a new file, rename_files.py, to src/data/ since the raw-data from kaggle included files with spaces in the names which caused problems when locating all image files in subfolders when running make_dataset.py to create processed data. We also added a config-files for hydra located in a config/ folder within src/models/. While implementing unit-tests of the code, a tests/ folder was created where test files for the data and model could be stored.
 
 ### Question 6
 
@@ -193,7 +193,8 @@ We adhered to the pep8 standard format for python code. It is important to have 
 >
 > Answer:
 
---- question 7 fill here ---
+We implemented 2 main calls containing different tests for data and model, respectively. In total we implemented three tests for testing the training, test and validation data. They check that the data-set is of correct length and shape, and that each sample has a corresponding label. Furthermore, we ensure that all classes are present. The model tests checks that the shape of the input data is correct. To account for this two tests have been included, one to check that it is a 4D tensor that is given, and one that ensures that each image input has size (batch_size, 3, 224, 224).
+
 
 ### Question 8
 
@@ -238,7 +239,7 @@ We adhered to the pep8 standard format for python code. It is important to have 
 >
 > Answer:
 
---- question 10 fill here ---
+Yes DVC was used to manage the data. Since the data used in this project is 224x224 images and there are approximately 20.000 of them, the resulting data files take up several Gbs of space. Therefore, sharing the data between members of the group and controlling that it is consistent for all members would be extremely cumbersome without DVC. With DVC retrieving the data was a matter of writing “dvc pull” and waiting a few minutes. It also is essential for ensuring reproducibility. If a new user joins the project, the user can be certain that the data retrieved is exactly as it should be.
 
 ### Question 11
 
@@ -273,7 +274,7 @@ We adhered to the pep8 standard format for python code. It is important to have 
 >
 > Answer:
 
---- question 12 fill here ---
+We ensured reproducibility by using hydra to load hyperparameters from a config/ folder containing hyperparameters for the model and training in separate config files within subfolders. Moreover, all hyperparameters of each run is stored using wandb, meaning that the hyperparameters of each experiment are stored and can not accidently be overwritten. This means that when the config-files are filled in, the model can be trained using: “python train_model.py”.
 
 ### Question 13
 
@@ -288,7 +289,7 @@ We adhered to the pep8 standard format for python code. It is important to have 
 >
 > Answer:
 
---- question 13 fill here ---
+As written above, we used a combination hydra and wandb to ensure that all information regarding the experiments was saved along with the trained model. This means that hydra loaded the hyperparameters set within the separate config-files for the model and training setup. During training everything within the config files is stored by wandb, meaning that the hyperparameters corresponding to a particular experiment is not accidently overwritten.
 
 ### Question 14
 
