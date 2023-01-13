@@ -8,6 +8,7 @@ Machine Learning Operations with ConvNeXt2: A Case Study in Classification of An
 [<img src="https://img.shields.io/badge/PyTorch%20Lightning-792DE4?style=for-the-badge&logo=pytorch-lightning&logoColor=white">](https://miro.medium.com/max/500/1*qHbAsMNmdWQJkzm2SUA-8w.jpeg)
 
 [![codecov](https://codecov.io/gh/rreezN/dtu_mlopsproject/branch/main/graph/badge.svg?token=DW6XAXYSZR)](https://codecov.io/gh/rreezN/dtu_mlopsproject)
+![example workflow](https://github.com/rreezN/dtu_mlopsproject/actions/workflows/codecoverage.yml/badge.svg)
 ![example workflow](https://github.com/rreezN/dtu_mlopsproject/actions/workflows/tests.yml/badge.svg)
 ![example workflow](https://github.com/rreezN/dtu_mlopsproject/actions/workflows/flake8.yml/badge.svg)
 ![example workflow](https://github.com/rreezN/dtu_mlopsproject/actions/workflows/isort.yml/badge.svg)
