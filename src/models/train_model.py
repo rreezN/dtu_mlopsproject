@@ -85,7 +85,7 @@ def train(cfg) -> None:
 
     val_data = dataset(val_image_data, val_images_labels.long())
     val_loader = DataLoader(
-        val_data, batch_size=train_hparams.hyperparameters.batch_size, num_workers=1, shuffle=True
+        val_data, batch_size=train_hparams.hyperparameters.batch_size, num_workers=1
     )
 
     trainer.fit(model, train_dataloaders=train_loader, val_dataloaders=val_loader)
