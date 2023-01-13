@@ -10,7 +10,7 @@ from dotenv import find_dotenv, load_dotenv
 from PIL import Image
 from torchvision import transforms
 from tqdm import tqdm
-
+import random
 
 @click.command()
 @click.argument("input_filepath", type=click.Path(exists=True))
@@ -26,20 +26,23 @@ def main(
     logger = logging.getLogger(__name__)
     logger.info("making final data set from raw data")
 
+    dummy_path = "data/dummy"
     # To Tensor transformer
     transform_to_tensor = transforms.Compose([transforms.ToTensor()])
 
     # Datasets to iterate through
-    datasets = ["training_data", "testing_data", "validation_data", "interesting_data"]
+    datasets = ["testing_data", "training_data", "validation_data", "interesting_data"]
 
     # Perform dataset loop
     for dataset in datasets:
         # Variables in which images and labels are saved intermediately
         images = []
         labels = []
+        class_length = [0]
         # Iterate through all animals
         for c_idx, animal in enumerate(glob(input_filepath + f"/{dataset}/*")):
             print(f"animal: {animal}")
+            class_length.append(class_length[-1]+len(glob(f"{animal}/*")))
             # iterte through all animal images
             for file in tqdm(glob(f"{animal}/*")):
                 # load image and resize it to "image_shape"
@@ -74,9 +77,24 @@ def main(
         norm_images = T(images)
         torch_labels = torch.Tensor(labels)
 
+        if dataset == "training_data":
+            n_samples = 500
+        elif dataset == "validation_data":
+            n_samples = 50
+        elif dataset == "testing_data":
+            n_samples = 30
+        else:
+            n_samples = 6
+
+        dummy_idx = [list(range(class_length[i], class_length[i]+n_samples)) for i in range(10)]
+        dummy_idx = [j for i in dummy_idx for j in i]
+        dummy_norm_images = norm_images[dummy_idx]
+        dummy_torch_labels = torch_labels[dummy_idx]
+
         with open(output_filepath + f"/{dataset}.pickle", "wb") as fp:
             pickle.dump((norm_images, torch_labels), fp)
-
+        with open(dummy_path + f"/{dataset}.pickle", "wb") as fp:
+            pickle.dump((dummy_norm_images, dummy_torch_labels), fp)
 
 if __name__ == "__main__":
     log_fmt = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
