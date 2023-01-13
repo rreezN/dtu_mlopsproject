@@ -47,11 +47,12 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         pip install -r requirements_tests.txt
-    - name: Generate Report
+        
+    - name: Run tests and collect coverage
       run: |
         pip install coverage
         pip install pytest
         wandb disabled
-        coverage run -m pytest tests/
+        pytest --cov app
     - name: Upload Coverage to Codecov
-      uses: codecov/codecov-action@v2
+      uses: codecov/codecov-action@v3
