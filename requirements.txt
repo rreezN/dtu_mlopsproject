@@ -21,3 +21,4 @@ wandb
 coverage
 pre-commit
 pytest
+pytest-cov
