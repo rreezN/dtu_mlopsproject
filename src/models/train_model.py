@@ -1,5 +1,4 @@
 import logging
-import os
 import pickle
 from typing import Tuple
 
@@ -47,11 +46,16 @@ def train(cfg) -> None:
     )
 
     checkpoint_callback = ModelCheckpoint(
-        dirpath="./models", monitor="val_loss", mode="min"
+        dirpath="./models",
+        monitor="val_loss",
+        mode="min"
     )
 
     early_stopping_callback = EarlyStopping(
-        monitor="train_loss", patience=train_hparams.hyperparameters.patience, verbose=True, mode="min"
+        monitor="train_loss",
+        patience=train_hparams.hyperparameters.patience,
+        verbose=True,
+        mode="min"
     )
     accelerator = "gpu" if train_hparams.hyperparameters.cuda else "cpu"
     wandb_logger = WandbLogger(
@@ -77,7 +81,10 @@ def train(cfg) -> None:
 
     train_data = dataset(train_image_data, train_images_labels.long())
     train_loader = DataLoader(
-        train_data, batch_size=train_hparams.hyperparameters.batch_size, num_workers=1, shuffle=True
+        train_data,
+        batch_size=train_hparams.hyperparameters.batch_size,
+        num_workers=1,
+        shuffle=True
     )
 
     with open(train_hparams.hyperparameters.val_data_path, "rb") as handle:
@@ -85,7 +92,9 @@ def train(cfg) -> None:
 
     val_data = dataset(val_image_data, val_images_labels.long())
     val_loader = DataLoader(
-        val_data, batch_size=train_hparams.hyperparameters.batch_size, num_workers=1
+        val_data,
+        batch_size=train_hparams.hyperparameters.batch_size,
+        num_workers=1
     )
 
     trainer.fit(model, train_dataloaders=train_loader, val_dataloaders=val_loader)
