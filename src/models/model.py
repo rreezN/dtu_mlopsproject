@@ -41,6 +41,17 @@ class MyAwesomeConvNext(LightningModule):
         self.log("train_acc", acc)
         return loss
 
+    def validation_step(self, batch: torch.Tensor, batch_idx: int) -> float:
+        data, target = batch
+        preds = self(data)
+        loss = self.criterion(preds, target)
+        acc = (target == preds.argmax(dim=-1)).float().mean()
+        # on_epoch=True by default in `validation_step`,
+        # so it is not necessary to specify
+        self.log("val_loss", loss, on_step=False, on_epoch=True, prog_bar=True)
+        self.log("val_acc", acc, on_step=False, on_epoch=True, prog_bar=True)
+        return loss
+
     def configure_optimizers(self):
         optimizer = torch.optim.Adam(self.parameters(), lr=self.lr)
         return optimizer

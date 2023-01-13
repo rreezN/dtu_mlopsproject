@@ -82,6 +82,12 @@ target/
 outputs/
 src/models/outputs/
 
+# exclude models
+models/
+
+# exclude wandb
+wandb/
+
 # Mac OS-specific storage files
 .DS_Store
 

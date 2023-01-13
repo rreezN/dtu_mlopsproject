@@ -26,13 +26,13 @@ class dataset(Dataset):
         return len(self.data)
 
 
-@hydra.main(config_path="config", config_name="config.yaml")
+@hydra.main(version_base=None, config_path="config", config_name="config.yaml")
 def train(cfg) -> None:
     log.info("Training day and night")
     model_hparams = cfg.model
     train_hparams = cfg.training
 
-    print(cfg.training)
+    # print(cfg.training)
 
     # log.info("lr:", train_hparams.hyperparameters.lr)
     # log.info("batch size:", train_hparams.hyperparameters.batch_size)
@@ -47,11 +47,11 @@ def train(cfg) -> None:
     )
 
     checkpoint_callback = ModelCheckpoint(
-        dirpath="./models", monitor="train_loss", mode="min"
+        dirpath="./models", monitor="val_loss", mode="min"
     )
 
     early_stopping_callback = EarlyStopping(
-        monitor="train_loss", patience=10, verbose=True, mode="min"
+        monitor="train_loss", patience=train_hparams.hyperparameters.patience, verbose=True, mode="min"
     )
     accelerator = "gpu" if train_hparams.hyperparameters.cuda else "cpu"
     wandb_logger = WandbLogger(
@@ -63,7 +63,7 @@ def train(cfg) -> None:
         devices=1,
         accelerator=accelerator,
         max_epochs=train_hparams.hyperparameters.epochs,
-        limit_train_batches=0.2,
+        limit_train_batches=train_hparams.hyperparameters.epochs,
         log_every_n_steps=1,
         callbacks=[checkpoint_callback, early_stopping_callback],
         logger=wandb_logger,
@@ -73,15 +73,23 @@ def train(cfg) -> None:
     log.info(f"device (accelerator): {accelerator}")
 
     with open(train_hparams.hyperparameters.train_data_path, "rb") as handle:
-        image_data, images_labels = pickle.load(handle)
+        train_image_data, train_images_labels = pickle.load(handle)
 
-    data = dataset(image_data, images_labels.long())
+    train_data = dataset(train_image_data, train_images_labels.long())
     train_loader = DataLoader(
-        data, batch_size=train_hparams.hyperparameters.batch_size, num_workers=8
+        train_data, batch_size=train_hparams.hyperparameters.batch_size, num_workers=1, shuffle=True
     )
 
-    trainer.fit(model, train_dataloaders=train_loader)
-    torch.save(model, f"{os.getcwd()}/trained_model.pt")
+    with open(train_hparams.hyperparameters.val_data_path, "rb") as handle:
+        val_image_data, val_images_labels = pickle.load(handle)
+
+    val_data = dataset(val_image_data, val_images_labels.long())
+    val_loader = DataLoader(
+        val_data, batch_size=train_hparams.hyperparameters.batch_size, num_workers=1, shuffle=True
+    )
+
+    trainer.fit(model, train_dataloaders=train_loader, val_dataloaders=val_loader)
+    # torch.save(model, f"{os.getcwd()}/trained_model.pt")
 
 
 if __name__ == "__main__":
