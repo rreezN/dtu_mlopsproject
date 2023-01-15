@@ -1,4 +1,4 @@
 [core]
     remote = remote_storage
 ['remote "remote_storage"']
-    url = gs://dtu_mlops_bucket-1/
+    url = gs://dtumlops2023
