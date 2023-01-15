@@ -36,12 +36,12 @@ class TestClass:
     N_val = 1000
 
     @pytest.mark.skipif(
-        not os.path.exists(os.path.join(_PATH_DATA, "processed/training_data.pickle")),
+        not os.path.exists(os.path.join(_PATH_DATA, "dummy/training_data.pickle")),
         reason="Data files not found",
     )
     def test_train_data(self):
         # load data
-        dataset = data_load(os.path.join(_PATH_DATA, "processed/training_data.pickle"))
+        dataset = data_load(os.path.join(_PATH_DATA, "dummy/training_data.pickle"))
         # Ensure correct data-size
         assert len(dataset) == self.N_train, "Data is incomplete"
         # Ensure correct data shape
@@ -61,12 +61,12 @@ class TestClass:
         ), "Labels do not represent all classes."
 
     @pytest.mark.skipif(
-        not os.path.exists(os.path.join(_PATH_DATA, "processed/testing_data.pickle")),
+        not os.path.exists(os.path.join(_PATH_DATA, "dummy/testing_data.pickle")),
         reason="Data files not found",
     )
     def test_test_data(self):
         # load data
-        dataset = data_load(os.path.join(_PATH_DATA, "processed/testing_data.pickle"))
+        dataset = data_load(os.path.join(_PATH_DATA, "dummy/testing_data.pickle"))
         # Ensure correct data-size
         assert len(dataset) == self.N_test, "Data is incomplete"
         # Ensure correct data shape
@@ -86,12 +86,12 @@ class TestClass:
         ), "Labels do not represent all classes."
 
     @pytest.mark.skipif(
-        not os.path.exists(os.path.join(_PATH_DATA, "processed/validation_data.pickle")),
+        not os.path.exists(os.path.join(_PATH_DATA, "dummy/validation_data.pickle")),
         reason="Data files not found",
     )
     def test_val_data(self):
         # load data
-        dataset = data_load(os.path.join(_PATH_DATA, "processed/validation_data.pickle"))
+        dataset = data_load(os.path.join(_PATH_DATA, "dummy/validation_data.pickle"))
         # Ensure correct data-size
         assert len(dataset) == self.N_val, "Data is incomplete"
         # Ensure correct data shape
