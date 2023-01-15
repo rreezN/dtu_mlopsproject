@@ -10,16 +10,16 @@ from dotenv import find_dotenv, load_dotenv
 from PIL import Image
 from torchvision import transforms
 from tqdm import tqdm
-import random
 
-@click.command()
+
+click.command()
+
+
 @click.argument("input_filepath", type=click.Path(exists=True))
 @click.argument("output_filepath", type=click.Path())
 @click.argument("image_shape", default=224, type=click.Path())
 @click.argument("norm_strat", default="model", type=click.Path())
-def main(
-    input_filepath: str, output_filepath: str, image_shape: int, norm_strat: str
-) -> None:
+def main(input_filepath: str, output_filepath: str, image_shape: int, norm_strat: str) -> None:
     """Runs data processing scripts to turn raw data from (../raw) into
     cleaned data ready to be analyzed (saved in ../processed).
     """
@@ -42,7 +42,7 @@ def main(
         # Iterate through all animals
         for c_idx, animal in enumerate(glob(input_filepath + f"/{dataset}/*")):
             print(f"animal: {animal}")
-            class_length.append(class_length[-1]+len(glob(f"{animal}/*")))
+            class_length.append(class_length[-1] + len(glob(f"{animal}/*")))
             # iterte through all animal images
             for file in tqdm(glob(f"{animal}/*")):
                 # load image and resize it to "image_shape"
@@ -86,7 +86,7 @@ def main(
         else:
             n_samples = 6
 
-        dummy_idx = [list(range(class_length[i], class_length[i]+n_samples)) for i in range(10)]
+        dummy_idx = [list(range(class_length[i], class_length[i] + n_samples)) for i in range(10)]
         dummy_idx = [j for i in dummy_idx for j in i]
         dummy_norm_images = norm_images[dummy_idx]
         dummy_torch_labels = torch_labels[dummy_idx]
@@ -95,6 +95,7 @@ def main(
             pickle.dump((norm_images, torch_labels), fp)
         with open(dummy_path + f"/{dataset}.pickle", "wb") as fp:
             pickle.dump((dummy_norm_images, dummy_torch_labels), fp)
+
 
 if __name__ == "__main__":
     log_fmt = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
