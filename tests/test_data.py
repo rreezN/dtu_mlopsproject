@@ -86,16 +86,12 @@ class TestClass:
         ), "Labels do not represent all classes."
 
     @pytest.mark.skipif(
-        not os.path.exists(
-            os.path.join(_PATH_DATA, "processed/validation_data.pickle")
-        ),
+        not os.path.exists(os.path.join(_PATH_DATA, "processed/validation_data.pickle")),
         reason="Data files not found",
     )
     def test_val_data(self):
         # load data
-        dataset = data_load(
-            os.path.join(_PATH_DATA, "processed/validation_data.pickle")
-        )
+        dataset = data_load(os.path.join(_PATH_DATA, "processed/validation_data.pickle"))
         # Ensure correct data-size
         assert len(dataset) == self.N_val, "Data is incomplete"
         # Ensure correct data shape
