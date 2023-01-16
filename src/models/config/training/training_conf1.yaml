@@ -4,7 +4,7 @@ hyperparameters:
         lr: 1e-3
         epochs: 10
         seed: 42
-        cuda: False
+        cuda: True
         limit_train_batches: 0.1
         patience: 10
         train_data_path: '/gcs/dtumlops2023/data/dummy/training_data.pickle'
