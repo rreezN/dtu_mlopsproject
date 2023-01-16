@@ -2,6 +2,7 @@ import torch
 from pytorch_lightning import LightningModule
 from torch import nn
 import timm
+import wandb
 
 
 class MyAwesomeConvNext(LightningModule):
@@ -41,7 +42,7 @@ class MyAwesomeConvNext(LightningModule):
         self.log("train_acc", acc)
         return loss
 
-    def validation_step(self, batch: torch.Tensor, batch_idx: int) -> float:
+    def validation_step(self, batch: torch.Tensor, batch_idx: int):
         data, target = batch
         preds = self(data)
         loss = self.criterion(preds, target)
@@ -50,7 +51,14 @@ class MyAwesomeConvNext(LightningModule):
         # so it is not necessary to specify
         self.log("val_loss", loss, on_step=False, on_epoch=True, prog_bar=True)
         self.log("val_acc", acc, on_step=False, on_epoch=True, prog_bar=True)
-        return loss
+        return [preds, target]
+
+    def validation_epoch_end(self, outs):
+        preds, targets = list(zip(*outs))
+        preds = torch.cat(preds).cpu().argmax(dim=1).numpy()
+        targets = torch.cat(targets).cpu().numpy()
+        self.logger.experiment.log({f"conf_mat_e{self.current_epoch}": wandb.plot.confusion_matrix(probs=None,
+                                                     y_true=targets, preds=preds)})
 
     def configure_optimizers(self):
         optimizer = torch.optim.Adam(self.parameters(), lr=self.lr)
