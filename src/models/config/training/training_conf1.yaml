@@ -4,7 +4,7 @@ hyperparameters:
         lr: 1e-3
         epochs: 20
         seed: 42
-        cuda: True
+        cuda: False
         limit_train_batches: 0.1
         patience: 10
         train_data_path: 'data/processed/training_data.pickle'
