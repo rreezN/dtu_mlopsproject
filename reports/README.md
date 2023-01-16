@@ -56,28 +56,28 @@ end of the project.
 * [X] Create the initial file structure using cookiecutter
 * [X] Fill out the `make_dataset.py` file such that it downloads whatever data you need and
 * [X] Add a model file and a training script and get that running
-* [ ] Remember to fill out the `requirements.txt` file with whatever dependencies that you are using
+* [X] Remember to fill out the `requirements.txt` file with whatever dependencies that you are using
 * [X] Remember to comply with good coding practices (`pep8`) while doing the project
 * [X] Do a bit of code typing and remember to document essential parts of your code
-* [ ] Setup version control for your data or part of your data
-* [ ] Construct one or multiple docker files for your code
-* [ ] Build the docker files locally and make sure they work as intended
+* [X] Setup version control for your data or part of your data
+* [X] Construct one or multiple docker files for your code
+* [X] Build the docker files locally and make sure they work as intended
 * [X] Write one or multiple configurations files for your experiments
 * [X] Used Hydra to load the configurations and manage your hyperparameters
-* [ ] When you have something that works somewhat, remember at some point to to some profiling and see if
+* [X] When you have something that works somewhat, remember at some point to to some profiling and see if
       you can optimize your code
-* [ ] Use Weights & Biases to log training progress and other important metrics/artifacts in your code. Additionally,
+* [X] Use Weights & Biases to log training progress and other important metrics/artifacts in your code. Additionally,
       consider running a hyperparameter optimization sweep.
-* [ ] Use Pytorch-lightning (if applicable) to reduce the amount of boilerplate in your code
+* [X] Use Pytorch-lightning (if applicable) to reduce the amount of boilerplate in your code
 
 ### Week 2
 
-* [ ] Write unit tests related to the data part of your code
-* [ ] Write unit tests related to model construction and or model training
-* [ ] Calculate the coverage.
-* [ ] Get some continuous integration running on the github repository
-* [ ] Create a data storage in GCP Bucket for you data and preferable link this with your data version control setup
-* [ ] Create a trigger workflow for automatically building your docker images
+* [X] Write unit tests related to the data part of your code
+* [X] Write unit tests related to model construction and or model training
+* [X] Calculate the coverage.
+* [X] Get some continuous integration running on the github repository
+* [X] Create a data storage in GCP Bucket for you data and preferable link this with your data version control setup
+* [X] Create a trigger workflow for automatically building your docker images
 * [ ] Get your model training in GCP using either the Engine or Vertex AI
 * [ ] Create a FastAPI application that can do inference using your model
 * [ ] If applicable, consider deploying the model locally using torchserve
@@ -224,7 +224,7 @@ We implemented 2 main calls containing different tests for data and model, respe
 >
 > Answer:
 
---- question 9 fill here ---
+Yes we used both branches and pull requests in our workflow. Branches were created whenever a new feature were added to the code, such that there were a specific branch for that feature. When it was fully developed it was made into a pull request where another group member closely examined the code and solved the merge conflicts. If there were any conflicts that the reviewing group member thought were problematic, they talked about the conflict and found a solution. This ensured that we had a good overview of our code changes and were able to experiment without interfering with the main code. 
 
 ### Question 10
 
@@ -255,7 +255,7 @@ Yes DVC was used to manage the data. Since the data used in this project is 224x
 >
 > Answer:
 
---- question 11 fill here ---
+We use unit testing to cover base cases of both model and data. The tests are split into four files: One for the tests themselves, one for checking compliance with pep8 via flake8, one to run isort and finally one to check the coverage of our code. The unit tests are set up to trigger via github actions on every pull request. Furthermore, we made use of the git tag function to set up automatic docker building in the cloud on google cloud platform, such that when a pull request was made, if it included the tag “cloud-build”, it builds new images on gcp. The tests and coverage were run on ubuntu, macos and windows, as well as python 3.8 and 3.9, to ensure compatibility across various installations. The isort and flake8 tests were only conducted on a single python version and os, as they are simply checks for compliance with good code practices. We make use of caching for the tests and code coverage as they require a great amount of setup for testing across multiple python versions and operating systems.An example of a triggered workflow can be seen [here](https://github.com/rreezN/dtu_mlopsproject/actions/runs/3929433014).
 
 ## Running code and tracking experiments
 
@@ -289,7 +289,7 @@ We ensured reproducibility by using hydra to load hyperparameters from a config/
 >
 > Answer:
 
-As written above, we used a combination hydra and wandb to ensure that all information regarding the experiments was saved along with the trained model. This means that hydra loaded the hyperparameters set within the separate config-files for the model and training setup. During training everything within the config files is stored by wandb, meaning that the hyperparameters corresponding to a particular experiment is not accidently overwritten.
+As written above, we used a combination hydra and wandb to ensure that all information regarding the experiments was saved along with the trained model. This means that hydra loaded the hyperparameters set within the separate config-files for the model and training setup. During training everything within the config files is stored by wandb, meaning that the hyperparameters corresponding to a particular experiment are not accidently overwritten. To further ensure reproducibility, the training and prediction process of course starts by setting a seed. This has the effect that initialising weights and shuffling data inside the dataloaders becomes deterministic rather than stochastic in the sense that the same “random” outcome happens each time.
 
 ### Question 14
 
@@ -336,7 +336,7 @@ As written above, we used a combination hydra and wandb to ensure that all infor
 >
 > Answer:
 
---- question 16 fill here ---
+Most debugging was done through the different IDEs which the group members used. These are in particular Pycharm and Visual Studio Code. This way it is simple to set up a debug configuration, to go through the code line-by-line when encountering errors in the code. Later on, when everything seemed to run, errors arose when building docker images and in particular when attempting to train in the cloud. Here debugging was much more difficult since you were only left with a single error message and re-running takes more and more time the further along in the process you have come. We tried profiling the code, but since we used pytorch-lightning, it was very difficult to see how we ourselves were to improve performance noticeably, not because the code is perfect by any means, but because most computations are handled elsewhere.
 
 ## Working in the cloud
 
