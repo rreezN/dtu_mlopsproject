@@ -7,4 +7,4 @@ COPY src/ src/
 
 WORKDIR /
 RUN pip install pip --upgrade
-RUN pip install -r requirements_train.txt --no-cache-dir
+RUN pip install --ignore-installed -r requirements_train.txt --no-cache-dir
