@@ -31,9 +31,9 @@ def data_load(filepath):
 
 
 class TestClass:
-    N_train = 15000
-    N_test = 1907
-    N_val = 1000
+    N_train = 5000
+    N_test = 300
+    N_val = 500
 
     @pytest.mark.skipif(
         not os.path.exists(os.path.join(_PATH_DATA, "dummy/training_data.pickle")),
