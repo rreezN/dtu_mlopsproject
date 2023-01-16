@@ -14,6 +14,7 @@ log = logging.getLogger(__name__)
 
 wandb.login(key='5b7c4dfaaa3458ff59ee371774798a737933dfa9')
 
+
 class dataset(Dataset):
     def __init__(self, images: torch.Tensor, labels: torch.Tensor) -> None:
         self.data = images
