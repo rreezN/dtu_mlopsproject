@@ -68,7 +68,7 @@ def train(cfg) -> None:
         devices=1,
         accelerator=accelerator,
         max_epochs=train_hparams.hyperparameters.epochs,
-        limit_train_batches=train_hparams.hyperparameters.epochs,
+        limit_train_batches=train_hparams.hyperparameters.limit_train_batches,
         log_every_n_steps=1,
         callbacks=[checkpoint_callback, early_stopping_callback],
         logger=wandb_logger,
