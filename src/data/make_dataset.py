@@ -19,7 +19,9 @@ click.command()
 @click.argument("output_filepath", type=click.Path())
 @click.argument("image_shape", default=224, type=click.Path())
 @click.argument("norm_strat", default="model", type=click.Path())
-def main(input_filepath: str, output_filepath: str, image_shape: int, norm_strat: str) -> None:
+def main(
+    input_filepath: str, output_filepath: str, image_shape: int, norm_strat: str
+) -> None:
     """Runs data processing scripts to turn raw data from (../raw) into
     cleaned data ready to be analyzed (saved in ../processed).
     """
@@ -86,7 +88,9 @@ def main(input_filepath: str, output_filepath: str, image_shape: int, norm_strat
         else:
             n_samples = 6
 
-        dummy_idx = [list(range(class_length[i], class_length[i] + n_samples)) for i in range(10)]
+        dummy_idx = [
+            list(range(class_length[i], class_length[i] + n_samples)) for i in range(10)
+        ]
         dummy_idx = [j for i in dummy_idx for j in i]
         dummy_norm_images = norm_images[dummy_idx]
         dummy_torch_labels = torch_labels[dummy_idx]

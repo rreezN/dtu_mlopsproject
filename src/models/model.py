@@ -57,7 +57,8 @@ class MyAwesomeConvNext(LightningModule):
         preds, targets = list(zip(*outs))
         preds = torch.cat(preds).cpu().argmax(dim=1).numpy()
         targets = torch.cat(targets).cpu().numpy()
-        self.logger.experiment.log({f"conf_mat_e{self.current_epoch}": wandb.plot.confusion_matrix(probs=None,
+        self.logger.experiment.log({f"conf_mat_e{self.current_epoch}": wandb.plot.confusion_matrix(
+                                                     probs=None,
                                                      y_true=targets, preds=preds)})
 
     def configure_optimizers(self):
