@@ -17,8 +17,7 @@ Machine Learning Operations with ConvNeXt2: A Case Study in Classification of An
 <p align="center">
   <img align="right" src="pictures/wide_animals_drawing.png" alt="drawing" width="450"/>
 </p>
-The goal of this project is to use the image classification model <a href="https://arxiv.org/abs/2301.00808">ConvNeXt V2</a> to classify a 10 class animal data set from <a href="https://www.kaggle.com/datasets/utkarshsaxenadn/animal-image-classification-dataset">Animals - V2</a>.
-
+The goal of this project is to use the image classification model <a href="https://arxiv.org/abs/2301.00808">ConvNeXt V2</a> to classify a 10 class animal data set from <a href="https://www.kaggle.com/datasets/utkarshsaxenadn/animal-image-classification-dataset">Animals - V2</a>.<br /><br />
 
 Our group (42) consists of:
 
