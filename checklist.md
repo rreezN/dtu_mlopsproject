@@ -19,19 +19,19 @@ point on the checklist for the exam.
 * [ ] Build the docker files locally and make sure they work as intended
 * [X] Write one or multiple configurations files for your experiments
 * [X] Used Hydra to load the configurations and manage your hyperparameters
-* [ ] When you have something that works somewhat, remember at some point to do some profiling and see if
+* [X] When you have something that works somewhat, remember at some point to do some profiling and see if
       you can optimize your code
-* [ ] Use Weights & Biases to log training progress and other important metrics/artifacts in your code. Additionally,
+* [X] Use Weights & Biases to log training progress and other important metrics/artifacts in your code. Additionally,
       consider running a hyperparameter optimization sweep.
 * [X] Use Pytorch-lightning (if applicable) to reduce the amount of boilerplate in your code
 
 ### Week 2
 
-* [ ] Write unit tests related to the data part of your code
-* [ ] Write unit tests related to model construction and or model training
-* [ ] Calculate the coverage.
-* [ ] Get some continuous integration running on the github repository
-* [ ] Create a data storage in GCP Bucket for you data and preferable link this with your data version control setup
+* [X] Write unit tests related to the data part of your code (*don't make sense to account for it on github, as data won't be available there*)
+* [X] Write unit tests related to model construction and or model training (*done for model construction*)
+* [X] Calculate the coverage. (*done with CodeCov, including ReadMe embed*)
+* [X] Get some continuous integration running on the github repository
+* [X] Create a data storage in GCP Bucket for you data and preferable link this with your data version control setup
 * [ ] Create a trigger workflow for automatically building your docker images
 * [ ] Get your model training in GCP using either the Engine or Vertex AI
 * [ ] Create a FastAPI application that can do inference using your model

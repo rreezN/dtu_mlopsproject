@@ -12,42 +12,39 @@ from torchvision import transforms
 from tqdm import tqdm
 
 
-@click.command()
-@click.argument('input_filepath', type=click.Path(exists=True))
-@click.argument('output_filepath', type=click.Path())
-@click.argument('image_shape', default=224, type=click.Path())
-@click.argument('norm_strat', default='model', type=click.Path())
-def main(
-        input_filepath: str,
-        output_filepath: str,
-        image_shape: int,
-        norm_strat: str) -> None:
-    """ Runs data processing scripts to turn raw data from (../raw) into
-        cleaned data ready to be analyzed (saved in ../processed).
+click.command()
+
+
+@click.argument("input_filepath", type=click.Path(exists=True))
+@click.argument("output_filepath", type=click.Path())
+@click.argument("image_shape", default=224, type=click.Path())
+@click.argument("norm_strat", default="model", type=click.Path())
+def main(input_filepath: str, output_filepath: str, image_shape: int, norm_strat: str) -> None:
+    """Runs data processing scripts to turn raw data from (../raw) into
+    cleaned data ready to be analyzed (saved in ../processed).
     """
     logger = logging.getLogger(__name__)
-    logger.info('making final data set from raw data')
+    logger.info("making final data set from raw data")
 
+    dummy_path = "data/dummy"
     # To Tensor transformer
-    transform_to_tensor = transforms.Compose([
-        transforms.ToTensor()
-    ])
+    transform_to_tensor = transforms.Compose([transforms.ToTensor()])
 
     # Datasets to iterate through
-    datasets = [
-        "training_data", "testing_data", "validation_data", "interesting_data"
-    ]
+    datasets = ["testing_data", "training_data", "validation_data", "interesting_data"]
 
     # Perform dataset loop
     for dataset in datasets:
         # Variables in which images and labels are saved intermediately
         images = []
         labels = []
+        class_length = [0]
         # Iterate through all animals
         for c_idx, animal in enumerate(glob(input_filepath + f"/{dataset}/*")):
             print(f"animal: {animal}")
+            class_length.append(class_length[-1] + len(glob(f"{animal}/*")))
             # iterte through all animal images
-            for file in tqdm(glob(f'{animal}/*')[:1500]):
+            for file in tqdm(glob(f"{animal}/*")):
                 # load image and resize it to "image_shape"
                 image = Image.open(file).resize((image_shape, image_shape))
                 # if loaded image is different from RGB, convert it.
@@ -61,31 +58,47 @@ def main(
         images = torch.stack(images)
 
         # Normalisation transformer
-        if norm_strat == 'model':
+        if norm_strat == "model":
             # transformer based on pre-trained model, mean and std
-            T = transforms.Compose([
-                transforms.Normalize(
-                    mean=torch.tensor([0.485, 0.456, 0.406]),
-                    std=torch.tensor([0.229, 0.224, 0.225])
-                )
-            ])
+            T = transforms.Compose(
+                [
+                    transforms.Normalize(
+                        mean=torch.tensor([0.485, 0.456, 0.406]),
+                        std=torch.tensor([0.229, 0.224, 0.225]),
+                    )
+                ]
+            )
         else:
             # transformer based on caluclated means and stds.
             means = images.mean(dim=(0, 2, 3))
             stds = images.std(dim=(0, 2, 3))
-            T = transforms.Compose([
-                transforms.Normalize(mean=means, std=stds)
-            ])
+            T = transforms.Compose([transforms.Normalize(mean=means, std=stds)])
         # Transform images
         norm_images = T(images)
         torch_labels = torch.Tensor(labels)
 
+        if dataset == "training_data":
+            n_samples = 500
+        elif dataset == "validation_data":
+            n_samples = 50
+        elif dataset == "testing_data":
+            n_samples = 30
+        else:
+            n_samples = 6
+
+        dummy_idx = [list(range(class_length[i], class_length[i] + n_samples)) for i in range(10)]
+        dummy_idx = [j for i in dummy_idx for j in i]
+        dummy_norm_images = norm_images[dummy_idx]
+        dummy_torch_labels = torch_labels[dummy_idx]
+
         with open(output_filepath + f"/{dataset}.pickle", "wb") as fp:
             pickle.dump((norm_images, torch_labels), fp)
+        with open(dummy_path + f"/{dataset}.pickle", "wb") as fp:
+            pickle.dump((dummy_norm_images, dummy_torch_labels), fp)
 
 
-if __name__ == '__main__':
-    log_fmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+if __name__ == "__main__":
+    log_fmt = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
     logging.basicConfig(level=logging.INFO, format=log_fmt)
 
     # not used in this stub but often useful for finding various files

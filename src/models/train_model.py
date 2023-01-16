@@ -1,5 +1,4 @@
 import logging
-import os
 import pickle
 from typing import Tuple
 
@@ -26,13 +25,16 @@ class dataset(Dataset):
         return len(self.data)
 
 
-@hydra.main(config_path="config", config_name="config.yaml")
+@hydra.main(version_base=None, config_path="config", config_name="config.yaml")
 def train(cfg) -> None:
     log.info("Training day and night")
     model_hparams = cfg.model
     train_hparams = cfg.training
 
-    log.info(train_hparams.hyperparameters.lr)
+    # print(cfg.training)
+
+    # log.info("lr:", train_hparams.hyperparameters.lr)
+    # log.info("batch size:", train_hparams.hyperparameters.batch_size)
     torch.manual_seed(train_hparams.hyperparameters.seed)
 
     model = MyAwesomeConvNext(
@@ -40,40 +42,63 @@ def train(cfg) -> None:
         pretrained=model_hparams.hyperparameters.pretrained,
         in_chans=model_hparams.hyperparameters.in_chans,
         num_classes=model_hparams.hyperparameters.num_classes,
-        lr=train_hparams.hyperparameters.lr
+        lr=train_hparams.hyperparameters.lr,
     )
 
     checkpoint_callback = ModelCheckpoint(
-        dirpath="./models", monitor="train_loss", mode="min"
+        dirpath="./models",
+        monitor="val_loss",
+        mode="min"
     )
 
     early_stopping_callback = EarlyStopping(
-        monitor="train_loss", patience=10, verbose=True, mode="min"
+        monitor="train_loss",
+        patience=train_hparams.hyperparameters.patience,
+        verbose=True,
+        mode="min"
     )
     accelerator = "gpu" if train_hparams.hyperparameters.cuda else "cpu"
+    wandb_logger = WandbLogger(
+        project="KomNuKristian", entity="dtu-mlopsproject", log_model="all"
+    )
+    for key, val in train_hparams.hyperparameters.items():
+        wandb_logger.experiment.config[key] = val
     trainer = Trainer(
         devices=1,
         accelerator=accelerator,
         max_epochs=train_hparams.hyperparameters.epochs,
-        limit_train_batches=0.2,
+        limit_train_batches=train_hparams.hyperparameters.epochs,
+        log_every_n_steps=1,
         callbacks=[checkpoint_callback, early_stopping_callback],
-        logger=WandbLogger(project="dtu-mlopsproject"),
-        precision=16,
+        logger=wandb_logger,
+        # precision=16,
     )
 
     log.info(f"device (accelerator): {accelerator}")
 
-    with open(train_hparams.hyperparameters.train_data_path, 'rb') as handle:
-        image_data, images_labels = pickle.load(handle)
+    with open(train_hparams.hyperparameters.train_data_path, "rb") as handle:
+        train_image_data, train_images_labels = pickle.load(handle)
 
-    data = dataset(image_data, images_labels.long())
+    train_data = dataset(train_image_data, train_images_labels.long())
     train_loader = DataLoader(
-        data,
-        batch_size=train_hparams.hyperparameters.batch_size
+        train_data,
+        batch_size=train_hparams.hyperparameters.batch_size,
+        num_workers=1,
+        shuffle=True
     )
 
-    trainer.fit(model, train_dataloaders=train_loader)
-    torch.save(model, f"{os.getcwd()}/trained_model.pt")
+    with open(train_hparams.hyperparameters.val_data_path, "rb") as handle:
+        val_image_data, val_images_labels = pickle.load(handle)
+
+    val_data = dataset(val_image_data, val_images_labels.long())
+    val_loader = DataLoader(
+        val_data,
+        batch_size=train_hparams.hyperparameters.batch_size,
+        num_workers=1
+    )
+
+    trainer.fit(model, train_dataloaders=train_loader, val_dataloaders=val_loader)
+    # torch.save(model, f"{os.getcwd()}/trained_model.pt")
 
 
 if __name__ == "__main__":

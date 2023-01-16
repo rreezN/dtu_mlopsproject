@@ -4,6 +4,7 @@ from glob import glob
 
 def rename(path: str):
 
+    print("Renaming")
     all_files = glob(path + "/*/*/*", recursive=True)
 
     for file in all_files:
@@ -11,4 +12,4 @@ def rename(path: str):
 
 
 if __name__ == "__main__":
-    rename('../../data/raw')
+    rename("../../data/raw")

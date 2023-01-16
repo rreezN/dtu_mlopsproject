@@ -10,7 +10,7 @@ __pycache__/
 env/
 build/
 develop-eggs/
-dist/
+# dist/
 downloads/
 eggs/
 .eggs/
@@ -77,6 +77,16 @@ target/
 
 # exclude data from source control by default
 /data/
+
+# exclude model outputs from hydra
+outputs/
+src/models/outputs/
+
+# exclude models
+models/
+
+# exclude wandb
+wandb/
 
 # Mac OS-specific storage files
 .DS_Store

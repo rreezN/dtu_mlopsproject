@@ -17,7 +17,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        os: [ubuntu-latest, macos-latest, windows-latest]
         python-version: ["3.9", "3.10"]
 
     steps:
@@ -47,8 +47,13 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         pip install -r requirements_tests.txt
+    
+    - uses: iterative/setup-dvc@v1
+    - name: Get data
+      run: dvc pull data/dummy
 
     - name: Test with pytest
       run: |
         pip install pytest
+        wandb disabled
         pytest -v

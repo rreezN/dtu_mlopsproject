@@ -21,25 +21,27 @@ class dataset(Dataset):
 
 
 @click.command()
-@click.argument('model_filepath', type=click.Path(exists=True))
-@click.argument('test_filepath', type=click.Path(exists=True))
+@click.argument("model_filepath", type=click.Path(exists=True))
+@click.argument("test_filepath", type=click.Path(exists=True))
 def evaluate(model_filepath, test_filepath):
     print("Evaluating model")
 
     with open(model_filepath + ".hydra/config.yaml") as f:
         params = yaml.load(f, Loader=SafeLoader)
 
-    model = timm.create_model(params.model.hyperparameters.model_name,
-                              pretrained=params.model.hyperparameters.pretrained,
-                              in_chans=params.model.hyperparameters.in_chans,
-                              num_classes=params.model.hyperparameters.num_classes)
+    model = timm.create_model(
+        params.model.hyperparameters.model_name,
+        pretrained=params.model.hyperparameters.pretrained,
+        in_chans=params.model.hyperparameters.in_chans,
+        num_classes=params.model.hyperparameters.num_classes,
+    )
 
     model.load_state_dict(torch.load(model_filepath + "/trained_model.pt"))
     device = "cuda" if torch.cuda.is_available() else "cpu"
     model = model.to(device)
     model.eval()
 
-    with open(test_filepath, 'rb') as handle:
+    with open(test_filepath, "rb") as handle:
         image_data, image_labels = pickle.load(handle)
 
     data = dataset(image_data, image_labels.long())
