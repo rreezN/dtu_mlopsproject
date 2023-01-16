@@ -17,7 +17,8 @@ Machine Learning Operations with ConvNeXt2: A Case Study in Classification of An
 <p align="center">
   <img align="right" src="pictures/wide_animals_drawing.png" alt="drawing" width="450"/>
 </p>
-The goal of this project is to use the image classification model <a href="https://arxiv.org/abs/2301.00808">ConvNeXt V2</a> to classify a 10 class animal data set from <a href="https://www.kaggle.com/datasets/utkarshsaxenadn/animal-image-classification-dataset">Animals - V2</a>.<br /><br />
+
+The goal of this project is to use the image classification model [ConvNeXt V2](https://arxiv.org/abs/2301.00808) to classify a 10 class animal data set from [Animals - V2](https://www.kaggle.com/datasets/utkarshsaxenadn/animal-image-classification-dataset).
 
 Our group (42) consists of:
 
@@ -48,9 +49,47 @@ The images vary in size and thus need to be transformed to a standard size.
 ## What deep learning models do you expect to use?
 We intend to use the model [ConvNeXt V2: Co-designing and Scaling ConvNets with Masked Autoencoders](https://arxiv.org/abs/2301.00808), which is a recent update to the original ConvNeXt. The model contains pre-trained models of different sizes, of which we will be using the pretrained 3.7 million parameter model, Atto.
 
+# Deploy locally
+To deploy locally, first install [torchserve](https://github.com/pytorch/serve).
+
+If your model is not already converted to torch_jit, then it needs to be done so. For pytorch lightning models, we supply a script. Simply run the following in a terminal, with the path to the model to be converted, and the path of the save location of the output model:
+
+```
+src/models/convert_model_jit.py path/to/model.pt path/to/output_model.pt
+```
+
+With the scripted model, if you do not already have a .mar file in model_store, then run:
+
+```
+torch-model-archiver \ 
+    --model-name animal_classifier \
+    --version 1.0 \
+    --serialized-file models/deployable_model.pt \
+    --export-path model_store \
+    --handler image_classifier \
+    --extra-files model_store/index_to_name.json
+```
+
+With your .mar file, you can now deploy using torchserve:
+
+```
+torchserve --start --ncs --model-store model_store --models animal_classifier=animal_classifier.mar                         
+```
+
+Then, open another terminal and run with the path to the image you wish to classify instead of my_image.jpg:
+
+```
+curl http://127.0.0.1:8080/predictions/animal_classifier -T pictures/my_image.jpg
+```
+
+You should now get the output from the deployed model, which shows the top 5 classes.
+
+<p align="center">
+<img src="pictures/local_deployment_output.png" alt="drawing" width="300"/>
+</p>
+
 --------
 See [report and checklist](reports/README.md).
-
 
 <p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. </small></p>
 # cookiecutterdatascience </p>
