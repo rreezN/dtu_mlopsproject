@@ -49,7 +49,7 @@ The images vary in size and thus need to be transformed to a standard size.
 We intend to use the model [ConvNeXt V2: Co-designing and Scaling ConvNets with Masked Autoencoders](https://arxiv.org/abs/2301.00808), which is a recent update to the original ConvNeXt. The model contains pre-trained models of different sizes, of which we will be using the pretrained 3.7 million parameter model, Atto.
 
 --------
-See [checklist](checklist.md).
+See [report and checklist](reports/README.md).
 
 
 <p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. </small></p>
