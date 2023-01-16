@@ -4,6 +4,7 @@ Markdown==3.4.1
 Pillow==9.4.0
 python-dotenv==0.21.0
 pytorch_lightning==1.8.6
+--ignore-installed
 PyYAML==6.0
 setuptools==44.0.0
 timm==0.6.12
