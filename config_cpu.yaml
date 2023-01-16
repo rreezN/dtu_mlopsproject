@@ -4,4 +4,4 @@ workerPoolSpecs:
       machineType: n1-highmem-2
    replicaCount: 1
    containerSpec:
-      imageUri: gcr.io/dtu-mlops-project-374510/<docker-img>
+      imageUri: gcr.io/eternal-seeker-374308/trainer

@@ -1,7 +1,7 @@
 import logging
 import pickle
 from typing import Tuple
-
+import wandb
 import hydra
 import torch
 from model import MyAwesomeConvNext
@@ -12,6 +12,7 @@ from torch.utils.data import DataLoader, Dataset
 
 log = logging.getLogger(__name__)
 
+wandb.login(key='5b7c4dfaaa3458ff59ee371774798a737933dfa9')
 
 class dataset(Dataset):
     def __init__(self, images: torch.Tensor, labels: torch.Tensor) -> None:
@@ -67,7 +68,7 @@ def train(cfg) -> None:
         devices=1,
         accelerator=accelerator,
         max_epochs=train_hparams.hyperparameters.epochs,
-        limit_train_batches=train_hparams.hyperparameters.epochs,
+        limit_train_batches=train_hparams.hyperparameters.limit_train_batches,
         log_every_n_steps=1,
         callbacks=[checkpoint_callback, early_stopping_callback],
         logger=wandb_logger,
