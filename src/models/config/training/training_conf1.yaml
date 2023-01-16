@@ -7,6 +7,6 @@ hyperparameters:
         cuda: False
         limit_train_batches: 0.1
         patience: 10
-        train_data_path: 'data/dummy/training_data.pickle'
-        val_data_path: 'data/dummy/validation_data.pickle'
+        train_data_path: '/gcs/dtumlops2023/data/dummy/training_data.pickle'
+        val_data_path: '/gcs/dtumlops2023/data/dummy/validation_data.pickle'
         model_out_path: 'models/'
