@@ -1,6 +1,8 @@
 steps:
    - name: 'gcr.io/cloud-builders/docker'
      args: ['build', '-t', 'gcr.io/eternal-seeker-374308/trainer', '-f', 'trainer.dockerfile', '.']
+     env: 
+      - 'WANDB_API_KEY=5b7c4dfaaa3458ff59ee371774798a737933dfa9'
    - name: 'gcr.io/cloud-builders/docker'
      args: ['push', 'gcr.io/eternal-seeker-374308/trainer']
      
