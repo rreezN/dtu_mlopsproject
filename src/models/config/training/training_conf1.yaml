@@ -1,12 +1,12 @@
 #config.yaml
 hyperparameters:
-        batch_size: 100
+        batch_size: 10
         lr: 1e-3
         epochs: 20
         seed: 42
         cuda: False
         limit_train_batches: 0.1
         patience: 10
-        train_data_path: 'data/processed/training_data.pickle'
-        val_data_path: 'data/processed/validation_data.pickle'
+        train_data_path: 'data/dummy/training_data.pickle'
+        val_data_path: 'data/dummy/validation_data.pickle'
         model_out_path: 'models/'

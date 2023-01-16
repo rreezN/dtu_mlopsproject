@@ -15,7 +15,6 @@ cookiecutter
 flake8
 isort
 dvc
-dvc[gdrive]
 dvc[gs]
 wandb
 coverage

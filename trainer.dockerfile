@@ -11,3 +11,6 @@ COPY src/ src/
 WORKDIR /
 RUN pip install pip --upgrade
 RUN pip install --ignore-installed -r requirements_train.txt --no-cache-dir
+RUN dvc pull data/dummy
+
+ENTRYPOINT ["python3", "-u", "src/models/train_model.py"]
