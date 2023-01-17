@@ -25,23 +25,17 @@ class MyAwesomeConvNext(LightningModule):
         self.lr = lr
         self.criterion = nn.CrossEntropyLoss()
 
+
     def forward(self, x):
         if x.ndim != 4:
             raise ValueError("Expected input to a 4D tensor")
-        if x.shape[1] != 3 or x.shape[2] != 224 or x.shape[3] != 224:
-            raise ValueError("Expected each sample to have shape {3, 224, 224}")
-
+        if x.shape[1] != 3:
+            raise ValueError("Expected dim 1 of sample to have shape {3}")
+        if x.shape[2] != 224:
+            raise ValueError("Expected dim 2 of sample to have shape {224}")
+        if x.shape[3] != 224:
+            raise ValueError("Expected dim 3 of sample to have shape {224}")
         return self.model(x)
-    # def forward(self, x):
-    #     if x.ndim != 4:
-    #         raise ValueError("Expected input to a 4D tensor")
-    #     if x.shape[1] != 3:
-    #         raise ValueError("Expected dim 1 of sample to have shape {3}")
-    #     elif x.shape[2] != 224:
-    #         raise ValueError("Expected dim 2 of sample to have shape {224}")
-    #     elif x.shape[3] != 224:
-    #         raise ValueError("Expected dim 3 of sample to have shape {224}")
-    #     return self.model(x)
 
     def training_step(self, batch: torch.Tensor, batch_idx: int) -> float:
         data, target = batch
