@@ -20,7 +20,7 @@ Machine Learning Operations with ConvNeXt2: A Case Study in Classification of An
 
 The goal of this project is to use the image classification model [ConvNeXt V2](https://arxiv.org/abs/2301.00808) to classify a 10 class animal data set from [Animals - V2](https://www.kaggle.com/datasets/utkarshsaxenadn/animal-image-classification-dataset).
 
-Our group (42) consists of:
+Our group (**42**) consists of:
 
 David Ari Ostenfeldt, s194237\
 Kristian Rhindal Møllmann, 194246\
