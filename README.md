@@ -13,28 +13,36 @@ Machine Learning Operations with ConvNeXt2: A Case Study in Classification of An
 ![example workflow](https://github.com/rreezN/dtu_mlopsproject/actions/workflows/flake8.yml/badge.svg)
 ![example workflow](https://github.com/rreezN/dtu_mlopsproject/actions/workflows/isort.yml/badge.svg)
 
-## Overall goals of the project
+
+### Group (42) consists of:
+David Ari Ostenfeldt (s194237), Kristian Rhindal Møllmann (194246), \
+Dennis Chenxi Zhuang (s194247), Kristoffer Marboe (s194249) and Kasper Niklas Kjær Hansen (s194267)
+
+
+## Table of contents
 <p align="center">
   <img align="right" src="pictures/wide_animals_drawing.png" alt="drawing" width="450"/>
 </p>
 
+1. [Overall goals of the project](#projectgoal)
+2. [What framework are you using?](#framework1)
+3. [How do you intend to include the framework in your project?](#framework1)
+4. [What data are you going to run on (initially)?](#data)
+5. [What deep learning models do you expect to use?](#deeplearning-model)
+7. [Deploying the model](#deploying)
+    1. [Local Deployment](#deploying-locally)
+    2. [Cloud Deployment](#deploying-cloud)
+
+## Overall goals of the project <a name="projectgoal"></a>
 The goal of this project is to use the image classification model [ConvNeXt V2](https://arxiv.org/abs/2301.00808) to classify a 10 class animal data set from [Animals - V2](https://www.kaggle.com/datasets/utkarshsaxenadn/animal-image-classification-dataset).
 
-Our group (**42**) consists of:
-
-David Ari Ostenfeldt, s194237\
-Kristian Rhindal Møllmann, 194246\
-Dennis Chenxi Zhuang, s194247\
-Kristoffer Marboe, s194249\
-Kasper Niklas Kjær Hansen, s194267
-
-## What framework are you using?
+## What framework are you using? <a name="framework1"></a>
 For this project the [Pytorch Image Models](https://github.com/rwightman/pytorch-image-models) framework is used. This framework implements state-of-the-art image models, and is a good fit for the goals of the project. 
 
-## How do you intend to include the framework in your project?
+## How do you intend to include the framework in your project? <a name="framework2"></a>
 Pytorch Image Models contains hundreds of pretrained state of the art models, which are fit to use in our project. Initially, we will use a pre-trained model in our pipeline. Using the pre-trained model will allow us to focus on implementing the various techniques taught in the course. If possible and time permits the model can be further improved for our data set.
 
-## What data are you going to run on (initially)?
+## What data are you going to run on (initially)? <a name="data"></a>
 For the project we are going to be working with the [Animals V2 Image Classification Data Set](https://www.kaggle.com/datasets/utkarshsaxenadn/animal-image-classification-dataset). The data set consists of 10 classes, with each class containing 2000 training images, 100 validation images, a varying amount of testing images and 6 interesting images. This means there are a total of 20000 training images and 1000 validation images. 
 
 | Class       |  Cat |  Cow |  Dog | Elephant | Gorilla | Hippo | Monkey | Panda | Tiger | Zebra |
@@ -44,12 +52,16 @@ For the project we are going to be working with the [Animals V2 Image Classifica
 | Testing     |  394 |  177 |   88 |      306 |      30 |    57 |    184 |   237 |   164 |   270 |
 | Interesting |    6 |    6 |    6 |        6 |       6 |     6 |      6 |     6 |     6 |     6 |
 
-The images vary in size and thus need to be transformed to a standard size.
+Additionaly, a *dummy* data set was created, with each class containing 500 training images, 50 validation images and 30 testing images. This was done as GitHub Actions are restricted by the [GitHub hardware specifications](https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources), meaning running tests on all data is unfeasible. Therefore a representative sample has been selected.
 
-## What deep learning models do you expect to use?
+The images vary in size and thus need to be transformed to a standard size, consisiting of three RGB channels with height and width being 224 (3, 224, 224). Additionally, data is normalised based on the mean and standard-deviation for each channel from the model specifications i.e. the normalisation values of the data that the original model was trained on.
+
+## What deep learning models do you expect to use? <a name="deeplearning-model"></a>
 We intend to use the model [ConvNeXt V2: Co-designing and Scaling ConvNets with Masked Autoencoders](https://arxiv.org/abs/2301.00808), which is a recent update to the original ConvNeXt. The model contains pre-trained models of different sizes, of which we will be using the pretrained 3.7 million parameter model, Atto.
 
-# Deploy locally
+# Deploying the model <a name="deploying"></a>
+
+## Local Deployment <a name="deploying-locally"></a>
 To deploy locally, first install [torchserve](https://github.com/pytorch/serve).
 
 If your model is not already converted to torch_jit, then it needs to be done so. For pytorch lightning models, we supply a script. Simply run the following in a terminal, with the path to the model to be converted, and the path of the save location of the output model:
@@ -107,7 +119,7 @@ and ```data/raw/testing_data/Tiger/Tiger-Test_(1).jpeg``` (available when runnin
 }
 True label: "tiger"
 ```
-
+## Cloud Deployment <a name="deploying-cloud"></a>
 --------
 See [report and checklist](reports/README.md).
 
