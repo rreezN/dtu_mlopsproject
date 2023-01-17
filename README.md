@@ -76,10 +76,10 @@ With your .mar file, you can now deploy using torchserve:
 torchserve --start --ncs --model-store model_store --models animal_classifier=animal_classifier.mar                         
 ```
 
-Then, open another terminal and run with the path to the image you wish to classify instead of my_image.jpg:
+Then, open another terminal and run with the path to the image you wish to classify instead of path/to/my_image.jpg:
 
 ```
-curl http://127.0.0.1:8080/predictions/animal_classifier -T pictures/my_image.jpg
+curl http://127.0.0.1:8080/predictions/animal_classifier -T path/to/my_image.jpg
 ```
 
 You should now get the output from the deployed model, which shows the top 5 classes.
