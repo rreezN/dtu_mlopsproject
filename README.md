@@ -82,11 +82,31 @@ Then, open another terminal and run with the path to the image you wish to class
 curl http://127.0.0.1:8080/predictions/animal_classifier -T path/to/my_image.jpg
 ```
 
-You should now get the output from the deployed model, which shows the top 5 classes.
+You should now get the output from the deployed model, which shows the top 5 classes. Below are two examples tested on ```/pictures/Cat.jpg```,
 
-<p align="center">
-<img src="pictures/local_deployment_output.png" alt="drawing" width="300"/>
-</p>
+```
+{
+  "cat": 0.99551,
+  "dog": 0.00336,
+  "monkey": 0.00067,
+  "cow": 0.00024,
+  "tiger":7.5478e-0.5
+}
+True label: "cat"
+```
+
+and ```data/raw/testing_data/Tiger/Tiger-Test_(1).jpeg``` (available when running ```dvc pull```),
+
+```
+{
+  "tiger": 0.99876,
+  "cat": 0.00068,
+  "zebra": 0.0002,
+  "monkey": 0.00012,
+  "gorilla":7.9897e-0.5
+}
+True label: "tiger"
+```
 
 --------
 See [report and checklist](reports/README.md).
