@@ -98,7 +98,7 @@ def train(cfg) -> None:
         num_workers=1
     )
 
-    trainer.fit(model, train_dataloaders=train_loader, 
+    trainer.fit(model, train_dataloaders=train_loader,
                 val_dataloaders=val_loader)
     # torch.save(model, f"{os.getcwd()}/trained_model.pt")
 
