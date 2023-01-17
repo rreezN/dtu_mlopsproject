@@ -93,4 +93,4 @@ See [report and checklist](reports/README.md).
 
 <p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. </small></p>
 # cookiecutterdatascience </p>
-# dtu_mlopsproject
+# dtu_mlopsproject 
