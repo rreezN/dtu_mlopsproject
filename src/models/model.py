@@ -25,7 +25,6 @@ class MyAwesomeConvNext(LightningModule):
         self.lr = lr
         self.criterion = nn.CrossEntropyLoss()
 
-
     def forward(self, x):
         if x.ndim != 4:
             raise ValueError("Expected input to a 4D tensor")
