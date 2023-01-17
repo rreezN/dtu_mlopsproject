@@ -80,7 +80,6 @@ def train(cfg) -> None:
 
     with open(train_hparams.hyperparameters.train_data_path, "rb") as handle:
         train_image_data, train_images_labels = pickle.load(handle)
-
     train_data = dataset(train_image_data, train_images_labels.long())
     train_loader = DataLoader(
         train_data,
@@ -99,7 +98,8 @@ def train(cfg) -> None:
         num_workers=1
     )
 
-    trainer.fit(model, train_dataloaders=train_loader, val_dataloaders=val_loader)
+    trainer.fit(model, train_dataloaders=train_loader, 
+                val_dataloaders=val_loader)
     # torch.save(model, f"{os.getcwd()}/trained_model.pt")
 
 
