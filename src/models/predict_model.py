@@ -1,11 +1,10 @@
 import pickle
 
-import timm
 import click
 import torch
-import yaml
-from yaml.loader import SafeLoader
 from torch.utils.data import DataLoader, Dataset
+from model import MyAwesomeConvNext
+from tqdm import tqdm
 
 
 class dataset(Dataset):
@@ -26,17 +25,16 @@ class dataset(Dataset):
 def evaluate(model_filepath, test_filepath):
     print("Evaluating model")
 
-    with open(model_filepath + ".hydra/config.yaml") as f:
-        params = yaml.load(f, Loader=SafeLoader)
+    # model = timm.create_model(
+    #     params['hyperparameters']['model_name'],
+    #     pretrained=params['hyperparameters']['pretrained'],
+    #     in_chans=params['hyperparameters']['in_chans'],
+    #     num_classes=params['hyperparameters']['num_classes'],
+    # )
 
-    model = timm.create_model(
-        params.model.hyperparameters.model_name,
-        pretrained=params.model.hyperparameters.pretrained,
-        in_chans=params.model.hyperparameters.in_chans,
-        num_classes=params.model.hyperparameters.num_classes,
-    )
+    # model.load_state_dict(torch.load(model_filepath))
 
-    model.load_state_dict(torch.load(model_filepath + "/trained_model.pt"))
+    model = MyAwesomeConvNext.load_from_checkpoint(model_filepath)
     device = "cuda" if torch.cuda.is_available() else "cpu"
     model = model.to(device)
     model.eval()
@@ -48,7 +46,7 @@ def evaluate(model_filepath, test_filepath):
     dataloader = DataLoader(data, batch_size=100)
 
     correct, total = 0, 0
-    for batch in dataloader:
+    for batch in tqdm(dataloader):
         x, y = batch
 
         preds = model(x.to(device))
