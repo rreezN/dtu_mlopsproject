@@ -84,7 +84,7 @@ def train(cfg) -> None:
     train_loader = DataLoader(
         train_data,
         batch_size=train_hparams.hyperparameters.batch_size,
-        num_workers=1,
+        num_workers=train_hparams.hyperparameters.num_workers,
         shuffle=True
     )
 
@@ -95,7 +95,7 @@ def train(cfg) -> None:
     val_loader = DataLoader(
         val_data,
         batch_size=train_hparams.hyperparameters.batch_size,
-        num_workers=1
+        num_workers=train_hparams.hyperparameters.num_workers
     )
 
     trainer.fit(model, train_dataloaders=train_loader,
