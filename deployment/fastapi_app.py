@@ -3,7 +3,6 @@ from google.cloud import storage
 import torch
 from PIL import Image
 from io import BytesIO
-import numpy as np
 from torchvision import transforms
 from model import MyAwesomeConvNext
 
