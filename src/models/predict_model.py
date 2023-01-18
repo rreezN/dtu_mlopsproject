@@ -1,14 +1,10 @@
 import pickle
 
-import timm
 import click
 import torch
-import yaml
-from yaml.loader import SafeLoader
 from torch.utils.data import DataLoader, Dataset
 from model import MyAwesomeConvNext
 from tqdm import tqdm
-
 
 
 class dataset(Dataset):
@@ -28,9 +24,6 @@ class dataset(Dataset):
 @click.argument("test_filepath", type=click.Path(exists=True))
 def evaluate(model_filepath, test_filepath):
     print("Evaluating model")
-
-    with open("src/models/config/model/model_conf1.yaml") as f:
-        params = yaml.load(f, Loader=SafeLoader)
 
     # model = timm.create_model(
     #     params['hyperparameters']['model_name'],
