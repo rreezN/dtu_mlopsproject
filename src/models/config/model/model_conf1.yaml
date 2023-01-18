@@ -1,6 +1,6 @@
 #config.yaml
 hyperparameters:
   model_name: convnext_atto
-  pretrained: True
+  pretrained: False
   in_chans: 3
   num_classes: 10
