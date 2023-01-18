@@ -29,6 +29,9 @@ Dennis Chenxi Zhuang (s194247), Kristoffer Marboe (s194249) and Kasper Niklas Kj
 3. [How do you intend to include the framework in your project?](#framework1)
 4. [What data are you going to run on (initially)?](#data)
 5. [What deep learning models do you expect to use?](#deeplearning-model)
+6. [Installing and running the model](#install-and-run)
+    1. [How to install](#how-to-install)
+    2. [How to run](#how-to-run)
 7. [Deploying the model](#deploying)
     1. [Local Deployment](#deploying-locally)
     2. [Cloud Deployment](#deploying-cloud)
@@ -59,7 +62,9 @@ The images vary in size and thus need to be transformed to a standard size, cons
 ## What deep learning models do you expect to use? <a name="deeplearning-model"></a>
 We intend to use the model [ConvNeXt V2: Co-designing and Scaling ConvNets with Masked Autoencoders](https://arxiv.org/abs/2301.00808), which is a recent update to the original ConvNeXt. The model contains pre-trained models of different sizes, of which we will be using the pretrained 3.7 million parameter model, Atto.
 
-# How to install <a name="how-to-install"></a>
+# Installing and running <a name="install-and-run"></a>
+
+## How to install <a name="how-to-install"></a>
 Installing the project is straight forward for running locally on your own machine. Clone the repo:
 ```
 git clone https://github.com/rreezN/dtu_mlopsproject.git
@@ -70,7 +75,7 @@ Install requirements. For optimal usage, create a virtual environment:
 pip install -r requirements.txt
 ```
 
-# How to run <a name="how-to-run"></a>
+## How to run <a name="how-to-run"></a>
 You can train the model locally by calling *`train_model.py`*:
 ```
 python src/models/train_model.py
@@ -142,6 +147,15 @@ and ```data/raw/testing_data/Tiger/Tiger-Test_(1).jpeg``` (available when runnin
 True label: "tiger"
 ```
 ## Cloud Deployment <a name="deploying-cloud"></a>
+
+The model is currently running in the cloud. To access it via FastAPI go to [this site](https://project-app-gqbczfp77a-ew.a.run.app/docs?fbclid=IwAR1I_wLJHQrxB9ZdDj9Qh9sZQS4apgM0uPbJBmX9RP9iUZsCXrsFoLVJdYA#/default/read_root__post).
+
+Alternatively, you can use the following command to send a request:
+
+```
+curl -m 70 -X POST https://europe-west1-eternal-seeker-374308.cloudfunctions.net/my-first-function -H "Authorization: bearer $(gcloud auth print-identity-token)" -H "Content-Type: multipart/form-data" -F "image=@path/to/image.jpg"
+```
+
 --------
 See [report and checklist](reports/README.md).
 
