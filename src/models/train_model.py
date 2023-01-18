@@ -14,6 +14,7 @@ log = logging.getLogger(__name__)
 
 wandb.login(key='5b7c4dfaaa3458ff59ee371774798a737933dfa9')
 
+
 class dataset(Dataset):
     def __init__(self, images: torch.Tensor, labels: torch.Tensor) -> None:
         self.data = images
@@ -53,38 +54,38 @@ def train(cfg) -> None:
     )
 
     early_stopping_callback = EarlyStopping(
-        monitor="train_loss",
+        monitor="val_loss",
         patience=train_hparams.hyperparameters.patience,
         verbose=True,
         mode="min"
     )
     accelerator = "gpu" if train_hparams.hyperparameters.cuda else "cpu"
     wandb_logger = WandbLogger(
-        project="KomNuKristian", entity="dtu-mlopsproject", log_model="all"
+        project="Final-Project", entity="dtu-mlopsproject", log_model="all"
     )
     for key, val in train_hparams.hyperparameters.items():
         wandb_logger.experiment.config[key] = val
     trainer = Trainer(
-        devices=1,
+        devices="auto",
         accelerator=accelerator,
         max_epochs=train_hparams.hyperparameters.epochs,
         limit_train_batches=train_hparams.hyperparameters.limit_train_batches,
         log_every_n_steps=1,
         callbacks=[checkpoint_callback, early_stopping_callback],
         logger=wandb_logger,
-        # precision=16,
+        reload_dataloaders_every_n_epochs=1
+        # precision="bf16"
     )
 
     log.info(f"device (accelerator): {accelerator}")
 
     with open(train_hparams.hyperparameters.train_data_path, "rb") as handle:
         train_image_data, train_images_labels = pickle.load(handle)
-
     train_data = dataset(train_image_data, train_images_labels.long())
     train_loader = DataLoader(
         train_data,
         batch_size=train_hparams.hyperparameters.batch_size,
-        num_workers=1,
+        num_workers=train_hparams.hyperparameters.num_workers,
         shuffle=True
     )
 
@@ -95,10 +96,11 @@ def train(cfg) -> None:
     val_loader = DataLoader(
         val_data,
         batch_size=train_hparams.hyperparameters.batch_size,
-        num_workers=1
+        num_workers=train_hparams.hyperparameters.num_workers
     )
 
-    trainer.fit(model, train_dataloaders=train_loader, val_dataloaders=val_loader)
+    trainer.fit(model, train_dataloaders=train_loader,
+                val_dataloaders=val_loader)
     # torch.save(model, f"{os.getcwd()}/trained_model.pt")
 
 

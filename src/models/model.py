@@ -2,6 +2,7 @@ import torch
 from pytorch_lightning import LightningModule
 from torch import nn
 import timm
+import wandb
 
 
 class MyAwesomeConvNext(LightningModule):
@@ -27,9 +28,12 @@ class MyAwesomeConvNext(LightningModule):
     def forward(self, x):
         if x.ndim != 4:
             raise ValueError("Expected input to a 4D tensor")
-        if x.shape[1] != 3 or x.shape[2] != 224 or x.shape[3] != 224:
-            raise ValueError("Expected each sample to have shape {3, 224, 224}")
-
+        if x.shape[1] != 3:
+            raise ValueError("Expected dim 1 of sample to have shape {3}")
+        if x.shape[2] != 224:
+            raise ValueError("Expected dim 2 of sample to have shape {224}")
+        if x.shape[3] != 224:
+            raise ValueError("Expected dim 3 of sample to have shape {224}")
         return self.model(x)
 
     def training_step(self, batch: torch.Tensor, batch_idx: int) -> float:
@@ -41,7 +45,7 @@ class MyAwesomeConvNext(LightningModule):
         self.log("train_acc", acc)
         return loss
 
-    def validation_step(self, batch: torch.Tensor, batch_idx: int) -> float:
+    def validation_step(self, batch: torch.Tensor, batch_idx: int):
         data, target = batch
         preds = self(data)
         loss = self.criterion(preds, target)
@@ -50,7 +54,15 @@ class MyAwesomeConvNext(LightningModule):
         # so it is not necessary to specify
         self.log("val_loss", loss, on_step=False, on_epoch=True, prog_bar=True)
         self.log("val_acc", acc, on_step=False, on_epoch=True, prog_bar=True)
-        return loss
+        return [preds, target]
+
+    def validation_epoch_end(self, outs):
+        preds, targets = list(zip(*outs))
+        preds = torch.cat(preds).cpu().argmax(dim=1).numpy()
+        targets = torch.cat(targets).cpu().numpy()
+        self.logger.experiment.log({f"conf_mat_e{self.current_epoch}": wandb.plot.confusion_matrix(
+                                                     probs=None,
+                                                     y_true=targets, preds=preds)})
 
     def configure_optimizers(self):
         optimizer = torch.optim.Adam(self.parameters(), lr=self.lr)
