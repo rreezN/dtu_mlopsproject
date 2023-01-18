@@ -59,6 +59,28 @@ The images vary in size and thus need to be transformed to a standard size, cons
 ## What deep learning models do you expect to use? <a name="deeplearning-model"></a>
 We intend to use the model [ConvNeXt V2: Co-designing and Scaling ConvNets with Masked Autoencoders](https://arxiv.org/abs/2301.00808), which is a recent update to the original ConvNeXt. The model contains pre-trained models of different sizes, of which we will be using the pretrained 3.7 million parameter model, Atto.
 
+# How to install <a name="how-to-install"></a>
+Installing the project is straight forward for running locally on your own machine. Clone the repo:
+```
+git clone https://github.com/rreezN/dtu_mlopsproject.git
+```
+
+Install requirements. For optimal usage, create a virtual environment:
+```
+pip install -r requirements.txt
+```
+
+# How to run <a name="how-to-run"></a>
+You can train the model locally by calling *`train_model.py`*:
+```
+python src/models/train_model.py
+```
+
+You can predict with:
+```
+python src/models/predict_model.py path/to/model.pt path/to/training_data.pickle
+```
+
 # Deploying the model <a name="deploying"></a>
 
 ## Local Deployment <a name="deploying-locally"></a>
