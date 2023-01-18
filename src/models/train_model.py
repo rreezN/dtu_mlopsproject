@@ -73,7 +73,7 @@ def train(cfg) -> None:
         log_every_n_steps=1,
         callbacks=[checkpoint_callback, early_stopping_callback],
         logger=wandb_logger,
-        precision="bf16"
+        # precision="bf16"
     )
 
     log.info(f"device (accelerator): {accelerator}")
