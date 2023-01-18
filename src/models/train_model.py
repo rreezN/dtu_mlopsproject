@@ -54,26 +54,26 @@ def train(cfg) -> None:
     )
 
     early_stopping_callback = EarlyStopping(
-        monitor="train_loss",
+        monitor="val_loss",
         patience=train_hparams.hyperparameters.patience,
         verbose=True,
         mode="min"
     )
     accelerator = "gpu" if train_hparams.hyperparameters.cuda else "cpu"
     wandb_logger = WandbLogger(
-        project="KomNuKristian", entity="dtu-mlopsproject", log_model="all"
+        project="Final-Project", entity="dtu-mlopsproject", log_model="all"
     )
     for key, val in train_hparams.hyperparameters.items():
         wandb_logger.experiment.config[key] = val
     trainer = Trainer(
-        devices=1,
+        devices="auto",
         accelerator=accelerator,
         max_epochs=train_hparams.hyperparameters.epochs,
         limit_train_batches=train_hparams.hyperparameters.limit_train_batches,
         log_every_n_steps=1,
         callbacks=[checkpoint_callback, early_stopping_callback],
         logger=wandb_logger,
-        # precision=16,
+        precision=16
     )
 
     log.info(f"device (accelerator): {accelerator}")
