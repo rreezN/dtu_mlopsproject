@@ -1,12 +1,10 @@
 from fastapi import FastAPI, UploadFile, File
 from google.cloud import storage
-import timm
 import torch
 from PIL import Image
 from io import BytesIO
 import numpy as np
 from torchvision import transforms
-import pickle
 from model import MyAwesomeConvNext
 
 app = FastAPI()
@@ -37,6 +35,7 @@ index2animal = {
     8: 'a tiger',
     9: 'a zebra'
 }
+
 
 @app.post("/")
 async def read_root(file: UploadFile = File(...)):
