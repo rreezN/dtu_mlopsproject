@@ -79,9 +79,9 @@ end of the project.
 * [X] Create a data storage in GCP Bucket for you data and preferable link this with your data version control setup
 * [X] Create a trigger workflow for automatically building your docker images
 * [X] Get your model training in GCP using either the Engine or Vertex AI
-* [ ] Create a FastAPI application that can do inference using your model
+* [X] Create a FastAPI application that can do inference using your model
 * [X] If applicable, consider deploying the model locally using torchserve
-* [ ] Deploy your model in GCP using either Functions or Run as the backend
+* [X] Deploy your model in GCP using either Functions or Run as the backend
 
 ### Week 3
 
@@ -163,7 +163,7 @@ To manage the dependencies in our project, we used the pipreqs package. This ens
 > *experiments.*
 > Answer:
 
-To adhere with the cookiecutter template, all code in the project is contained within the src/ folder. All files which are initially present within the template have been altered, namely: make_data.py, model.py, train_model.py and predict_model.py. We also added a new file, rename_files.py, to src/data/ since the raw-data from kaggle included files with spaces in the names which caused problems when locating all image files in subfolders when running make_dataset.py to create processed data. We also added a config-files for hydra located in a config/ folder within src/models/. While implementing unit-tests of the code, a tests/ folder was created where test files for the data and model could be stored.
+To adhere with the cookiecutter template, all code in the project is contained within the src/ folder. All files which are initially present within the template have been altered, namely: make_data.py, model.py, train_model.py and predict_model.py. We also added a new file, rename_files.py, to src/data/ since the raw-data from kaggle included files with spaces in the names which caused problems when locating all image files in subfolders when running make_dataset.py to create processed data. We also added a config-files for hydra located in a config/ folder within src/models/. While implementing unit-tests of the code, a tests/ folder was created where test files for the data and model could be stored. To deploy the model using images, a deployment/ folder was created, containing the fastapi app files.
 
 ### Question 6
 
