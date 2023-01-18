@@ -22,13 +22,6 @@ encoded_state_dict = blob.download_as_string()
 # because model downloaded into string, need to convert it back
 buff = BytesIO(encoded_state_dict)
 
-# state_dict = torch.load(buff, map_location=torch.device('cpu'))
-# model = timm.create_model(
-#     "convnext_atto",
-#     pretrained=True,
-#     in_chans=3,
-#     num_classes=10,
-# )
 my_model = MyAwesomeConvNext.load_from_checkpoint(buff)
 my_model.eval()
 
@@ -51,7 +44,6 @@ async def read_root(file: UploadFile = File(...)):
     image = Image.open(data)
     if image.mode != "RGB":
         image = image.convert("RGB")
-    imgshape = np.array(image).shape
     image = image.resize((224, 224))
 
     T = transforms.Compose(
@@ -66,7 +58,6 @@ async def read_root(file: UploadFile = File(...)):
 
     norm_image = T(image)
     prediction = my_model(norm_image.unsqueeze(0))[0]
-    print(prediction)
     most_likely = prediction.argmax().item()
     animal = index2animal[most_likely]
     certainties = prediction.exp()/prediction.exp().sum()
