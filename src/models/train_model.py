@@ -73,6 +73,7 @@ def train(cfg) -> None:
         log_every_n_steps=1,
         callbacks=[checkpoint_callback, early_stopping_callback],
         logger=wandb_logger,
+        reload_dataloaders_every_n_epochs=1
         # precision="bf16"
     )
 
