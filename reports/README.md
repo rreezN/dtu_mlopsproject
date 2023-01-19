@@ -148,7 +148,7 @@ We used the framework [Pytorch Image Models](https://github.com/rwightman/pytorc
 >
 > Answer:
 
-To manage the dependencies in our project, we used the pipreqs package. This ensured that all dependencies were accounted for while reducing the length of the requirements.txt file as much as possible. To setup working on the project, it is required to build a virtual environment, run pip install --upgrade pip and then run python -m pip install -r requirements.txt. Next the new user should use the installed dvc package to pull data from Google Storage, by running “git pull” followed by “dvc pull”. Now everything should be setup correctly and be ready to train models etc.
+To manage the dependencies in our project, we used the pipreqs package. This ensured that all dependencies were accounted for while reducing the length of the requirements.txt file as much as possible. To setup working on the project, it is required to build a virtual environment, run `pip install --upgrade pip and then run python -m pip install -r requirements.txt`. Next the new user should use the installed `dvc` package to pull data from Google Storage, by running `git pull` followed by `dvc pull`. Now everything should be setup correctly and be ready to train models etc.
 
 ### Question 5
 
