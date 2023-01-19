@@ -306,7 +306,19 @@ As written above, we used a combination hydra and wandb to ensure that all infor
 >
 > Answer:
 
---- question 14 fill here ---
+![](figures/wandb1.png)
+
+First and foremost we decided to log graphs of the training/validation loss and training/validation accuracy, as these four metrics give us the most immediate idea of how a given model is performing. The above figure shows exactly these metrics and how the different models  compare against each other.
+
+![](figures/wandb2.png)
+
+In addition to model performance metrics, we also log all the relevant model and training information for a given run. In the above figure we see that this information includes the batch size, number of epochs, learning rate, model name etc. From the left side of the figure, we also see that we have several models saved for a single run. This is done using Pytorch Lightning’s callback function ModelCheckpoint that saves a model each time the validation loss reaches a new low within a given run.
+
+![](figures/wandb3.png)
+
+The final thing we decided to track is the confusion matrix for the model in each epoch, as is seen above. The confusion matrix shows us the model’s predicted classes vs. the actual classes and thus gives us an indication of which animals the model struggles on during the training process.
+We did not decide to do any hyperparameter sweeping this time around because of different issues regarding Hydra and Wandb.
+
 
 ### Question 15
 
@@ -377,7 +389,7 @@ Most debugging was done through the different IDEs which the group members used.
 >
 > Answer:
 
---- question 19 fill here ---
+![](figures/bucketlist.png)
 
 ### Question 20
 
@@ -386,7 +398,7 @@ Most debugging was done through the different IDEs which the group members used.
 >
 > Answer:
 
---- question 20 fill here ---
+![](figures/container-registry.png)
 
 ### Question 21
 
@@ -395,7 +407,7 @@ Most debugging was done through the different IDEs which the group members used.
 >
 > Answer:
 
---- question 21 fill here ---
+![](figures/cloud-build.png)
 
 ### Question 22
 
