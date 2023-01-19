@@ -1,4 +1,4 @@
-Machine Learning Operations with ConvNeXt2: A Case Study in Classification of Animal Images 
+Machine Learning Operations with ConvNeXt: A Case Study in Classification of Animal Images 
 ==============================
 [<img src="https://img.shields.io/badge/PyTorch-%23EE4C2C.svg?style=for-the-badge&logo=PyTorch&logoColor=white">](https://www.youtube.com/watch?v=dQw4w9WgXcQ?autoplay=1)
 [<img src="https://img.shields.io/badge/Weights_&_Biases-FFBE00?style=for-the-badge&logo=WeightsAndBiases&logoColor=white">](https://scontent-arn2-2.xx.fbcdn.net/v/t1.15752-9/324219590_702995398045880_3444596723210508741_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=ae9488&_nc_ohc=Ib-CcSC91PUAX-bZQZQ&_nc_ht=scontent-arn2-2.xx&oh=03_AdTxAZGsuouCqphrNQsysFSHP01yAha4iFyapgjLQT7_qA&oe=63E77E24)
@@ -38,7 +38,7 @@ Dennis Chenxi Zhuang (s194247), Kristoffer Marboe (s194249) and Kasper Niklas Kj
     2. [Cloud Deployment](#deploying-cloud)
 9. [Report and checklist](#report_n_checklist)
 ## Overall goals of the project <a name="projectgoal"></a>
-The goal of this project is to use the image classification model [ConvNeXt V2](https://arxiv.org/abs/2301.00808) to classify a 10 class animal data set from [Animals - V2](https://www.kaggle.com/datasets/utkarshsaxenadn/animal-image-classification-dataset).
+The goal of this project is to use the image classification model [ConvNeXt](https://arxiv.org/abs/2201.03545) to classify a 10 class animal data set from [Animals - V2](https://www.kaggle.com/datasets/utkarshsaxenadn/animal-image-classification-dataset).
 
 ## What framework are you using? <a name="framework1"></a>
 For this project the [Pytorch Image Models](https://github.com/rwightman/pytorch-image-models) framework is used. This framework implements state-of-the-art image models, and is a good fit for the goals of the project. 
