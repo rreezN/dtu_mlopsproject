@@ -104,7 +104,7 @@ To deploy locally, first install [torchserve](https://github.com/pytorch/serve).
 If your model is not already converted to torch_jit, then it needs to be done so. For pytorch lightning models, we supply a script. Simply run the following in a terminal, with the path to the model to be converted, and the path of the save location of the output model:
 
 ```
-src/models/convert_model_jit.py path/to/model.pt path/to/output_model.pt
+python src/models/convert_model_jit.py path/to/model.pt path/to/output_model.pt
 ```
 
 With the scripted model, if you do not already have a .mar file in model_store, then run:
