@@ -21,7 +21,7 @@ Dennis Chenxi Zhuang (s194247), Kristoffer Marboe (s194249) and Kasper Niklas Kj
 
 ## Table of contents
 <p align="center">
-  <img align="right" src="pictures/animals_drawing.png" alt="drawing" width="300"/>
+  <img align="right" src="pictures/animals_drawing.png" alt="drawing" width="350"/>
 </p>
 
 1. [Overall goals of the project](#projectgoal)
