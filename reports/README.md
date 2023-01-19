@@ -163,7 +163,7 @@ To manage the dependencies in our project, we used the pipreqs package. This ens
 > *experiments.*
 > Answer:
 
-To adhere with the cookiecutter template, all code in the project is contained within the src/ folder. All files which are initially present within the template have been altered, namely: make_data.py, model.py, train_model.py and predict_model.py. We also added a new file, rename_files.py, to src/data/ since the raw-data from kaggle included files with spaces in the names which caused problems when locating all image files in subfolders when running make_dataset.py to create processed data. We also added a config-files for hydra located in a config/ folder within src/models/. While implementing unit-tests of the code, a tests/ folder was created where test files for the data and model could be stored. To deploy the model using images, a deployment/ folder was created, containing the fastapi app files.
+To adhere with the cookiecutter template, all code in the project is contained within the src/ folder. All files which are initially present within the template have been altered, namely: make_data.py, model.py, train_model.py and predict_model.py. We also added a new file, rename_files.py, to src/data/ since the raw-data from kaggle included files with spaces in the names which caused problems when locating all image files in subfolders when running make_dataset.py to create processed data. We also added a config-files for hydra located in a config/ folder within src/models/. While implementing unit-tests of the code, a tests/ folder was created where test files for the data and model could be stored. To deploy the model using images, a `deployment/` folder was created, containing the fastapi app files.
 
 ### Question 6
 
@@ -174,7 +174,8 @@ To adhere with the cookiecutter template, all code in the project is contained w
 >
 > Answer:
 
-We adhered to the pep8 standard format for python code. It is important to have a guideline for how could should be written and formatted in large projects, especially when a lot of people will be working with it. The guideline serves to standardise the code, such that it is easier to process and understand when new members of the project look at the code (or you return after a year of not looking at it). Furthermore, standardised code can also entail using comments in a certain way, i.e. to explain why something is implemented the way it is.
+We adhered to the pep8 standard format for python code, with the change that the maximum line length is 100 to allow for more explanatory variable names. It is important to have a guideline for how it should be written and formatted in large projects, especially when a lot of people will be working with it. The guideline serves to standardise the code, such that it is easier to process and understand when new members of the project look at the code (or you return after a year of not looking at it). Furthermore, standardised code can also entail using comments in a certain way, i.e. to explain why something is implemented the way it is.
+
 
 ## Version control
 
@@ -193,7 +194,10 @@ We adhered to the pep8 standard format for python code. It is important to have 
 >
 > Answer:
 
-We implemented 2 main calls containing different tests for data and model, respectively. In total we implemented three tests for testing the training, test and validation data. They check that the data-set is of correct length and shape, and that each sample has a corresponding label. Furthermore, we ensure that all classes are present. The model tests checks that the shape of the input data is correct. To account for this two tests have been included, one to check that it is a 4D tensor that is given, and one that ensures that each image input has size (batch_size, 3, 224, 224).
+We implemented 2 main calls containing different tests for data and model, respectively. In total we implemented three tests for testing the training, test and validation data. They check that the data-set is of correct length and shape, and that each sample has a corresponding label. Furthermore, we ensure that all classes are present.
+
+The model tests checks that the shape of the input data is correct. To account for this two tests have been included, one to check that it is a 4D tensor that is given, and one that ensures that each image input has size `[batch_size, 3, 224, 224]`.
+
 
 
 ### Question 8
@@ -209,7 +213,7 @@ We implemented 2 main calls containing different tests for data and model, respe
 >
 > Answer:
 
---- question 8 fill here ---
+Coverage is calculated on the two Pytest test scripts. The total code coverage of the two scripts is 100%, which includes tests of model and data. Since the code-coverage is so high we would expect the code to have fewer errors. However, this could lead to a false sense of security since it is not guaranteed error-free. Wrong arguments can be passed between functions which work fine on their own but fail under specific conditions. All the possible inputs and edge cases might not be tested and such inputs might lead to the program failing or, even worse, give a wrong result which is unknown to us, and thereby skewing the results. Code coverage only refers to the percentage of our code that actually gets run when all our tests are executed.
 
 ### Question 9
 
@@ -255,7 +259,7 @@ Yes DVC was used to manage the data. Since the data used in this project is 224x
 >
 > Answer:
 
-We use unit testing to cover base cases of both model and data. The tests are split into four files: One for the tests themselves, one for checking compliance with pep8 via flake8, one to run isort and finally one to check the coverage of our code. The unit tests are set up to trigger via github actions on every pull request. Furthermore, we made use of the git tag function to set up automatic docker building in the cloud on google cloud platform, such that when a pull request was made, if it included the tag “cloud-build”, it builds new images on gcp. The tests and coverage were run on ubuntu, macos and windows, as well as python 3.8 and 3.9, to ensure compatibility across various installations. The isort and flake8 tests were only conducted on a single python version and os, as they are simply checks for compliance with good code practices. We make use of caching for the tests and code coverage as they require a great amount of setup for testing across multiple python versions and operating systems.An example of a triggered workflow can be seen [here](https://github.com/rreezN/dtu_mlopsproject/actions/runs/3929433014).
+We use unit testing to cover base cases of both model and data. The tests are split into four files: One for the tests themselves, one for checking compliance with pep8 via flake8, one to run isort and finally one to check the coverage of our code. The unit tests are set up to trigger via github actions on every pull request. Furthermore, we made use of the git tag function to set up automatic docker building in the cloud on google cloud platform, such that when a pull request was made, if it included the tag “cloud-build”, it builds new images on gcp. The tests and coverage were run on ubuntu, macos and windows, as well as python 3.8 and 3.9, to ensure compatibility across various installations. The isort and flake8 tests were only conducted on a single python version and os, as they are simply checks for compliance with good code practices. We make use of caching for the tests and code coverage as they require a great amount of setup for testing across multiple python versions and operating systems. An example of a triggered workflow can be seen [here](https://github.com/rreezN/dtu_mlopsproject/actions/runs/3929433014).
 
 ## Running code and tracking experiments
 
@@ -274,7 +278,11 @@ We use unit testing to cover base cases of both model and data. The tests are sp
 >
 > Answer:
 
-We ensured reproducibility by using hydra to load hyperparameters from a config/ folder containing hyperparameters for the model and training in separate config files within subfolders. Moreover, all hyperparameters of each run is stored using wandb, meaning that the hyperparameters of each experiment are stored and can not accidently be overwritten. This means that when the config-files are filled in, the model can be trained using: “python train_model.py”.
+We ensured reproducibility by using hydra to load hyperparameters from a `config/` folder containing hyperparameters for the model and training in separate config files within subfolders. Moreover, all hyperparameters of each run are stored using WandB, meaning that the hyperparameters of each experiment are stored and can not accidentally be overwritten. This means that when the config-files are filled in, the model can be trained using: 
+
+```bash
+python src/models/train_model.py
+```
 
 ### Question 13
 
@@ -289,7 +297,7 @@ We ensured reproducibility by using hydra to load hyperparameters from a config/
 >
 > Answer:
 
-As written above, we used a combination hydra and wandb to ensure that all information regarding the experiments was saved along with the trained model. This means that hydra loaded the hyperparameters set within the separate config-files for the model and training setup. During training everything within the config files is stored by wandb, meaning that the hyperparameters corresponding to a particular experiment are not accidently overwritten. To further ensure reproducibility, the training and prediction process of course starts by setting a seed. This has the effect that initialising weights and shuffling data inside the dataloaders becomes deterministic rather than stochastic in the sense that the same “random” outcome happens each time.
+As written above, we used a combination hydra and WandB to ensure that all information regarding the experiments was saved along with the trained model. This means that hydra loaded the hyperparameters set within the separate config-files for the model and training setup. During training everything within the config files is stored by WandB, meaning that the hyperparameters corresponding to a particular experiment are not accidentally overwritten. To further ensure reproducibility, the training and prediction process of course starts by setting a seed. This has the effect that initialising weights and shuffling data inside the dataloaders becomes deterministic rather than stochastic in the sense that the same “random” outcome happens each time.
 
 ### Question 14
 
@@ -333,7 +341,21 @@ We did not decide to do any hyperparameter sweeping this time around because of 
 >
 > Answer:
 
---- question 15 fill here ---
+Two containers, trainer and deployment, were created based on two image builds. We did not utilise local dockers, however, we did use google’s cloud containers. Link to our container registry has trainer images and deployment images (project_app) can be found [here]( https://console.cloud.google.com/gcr/images/eternal-seeker-374308?project=eternal-seeker-374308)
+```bash
+gcloud ai custom-jobs create --region=europe-west1 --display-name=test-runXX --config=config_cpu.yaml
+```
+Where config_cpu.yaml is defined as 
+```yaml
+workerPoolSpecs:
+   machineSpec:
+      machineType: c2-standard-8
+   replicaCount: 1
+   containerSpec:
+      imageUri: gcr.io/eternal-seeker-374308/trainer
+```
+We specifically use the c2 machine type because it offers great computing power.
+
 
 ### Question 16
 
@@ -365,7 +387,22 @@ Most debugging was done through the different IDEs which the group members used.
 >
 > Answer:
 
---- question 17 fill here ---
+To some extent we used all the following services during the development of this project:
+* Buckets: 
+    * Makes it possible to store data and trained models remotely with easy access.
+* Compute Engine:       
+    * Virtual machine computing capabilities with GPU support.
+* Vertex AI:            
+    * Easily build, deploy, and manage AI and machine learning development.
+* Container Registry:   
+    * Private Docker image storage system
+* Cloud Build:
+    * Executes one’s builds on Google Cloud Platform infrastructure by importing source code from github.
+* Cloud Function:
+    * Set up cloud deployment, such that we can predict on images.
+* Cloud Run:
+    * Set up cloud deployment via docker images and fast api
+
 
 ### Question 18
 
@@ -380,7 +417,17 @@ Most debugging was done through the different IDEs which the group members used.
 >
 > Answer:
 
---- question 18 fill here ---
+Initially we wanted to use Compute Engine for model training, however, due to some billing issues and troubles regarding deployment of docker images we were unable to use the service. Furthermore, because Vertex AI is offered as another service, which, additionally, fits our needs better we chose to train with Vertex AI instead of VM instances. With Vertex AI automatically creating a VM based on a container image that it has grabbed from our Container Registry, executing the training and shutting down the VM again, this service just fits us better.  As for hardware specifications we configured a .yaml file for CPU training which is seen below. As we ran into multiple problems regarding getting Vertex AI to create an instance with a GPU accelerator, we decided on the powerful ‘c2’ CPU machine type to speed up training.
+
+```yaml
+workerPoolSpecs:
+   machineSpec:
+      machineType: c2-standard-8
+   replicaCount: 1
+   containerSpec:
+      imageUri: gcr.io/eternal-seeker-374308/trainer
+```
+
 
 ### Question 19
 
@@ -423,7 +470,16 @@ Most debugging was done through the different IDEs which the group members used.
 >
 > Answer:
 
---- question 22 fill here ---
+Initially, we deployed the model locally using torchserve. The after some trial-and-error with deploying in the cloud, we managed to deploy our model both using Cloud Functions and Cloud Run. Since the model requires a lot of dependencies, such as torch, torchvision, pytorch-lightning etc., we ended up using Cloud Run to deploy our model with an image dedicated to predictions. The service is build using fastapi which simplified sending and reading image files through requests. To invoke the service a user just needs to call:
+```bash
+curl -X 'POST' \
+  'https://project-app-gqbczfp77a-ew.a.run.app/' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: multipart/form-data' \
+  -F 'file=@tiger.jpg;type=image/jpeg'
+```
+Where tiger.jpg is replaced with whatever image the user wants the model to predict on.
+
 
 ### Question 23
 
@@ -438,7 +494,7 @@ Most debugging was done through the different IDEs which the group members used.
 >
 > Answer:
 
---- question 23 fill here ---
+We did not implement monitoring of your deployed model. Monitoring would help the longevity of our application by keeping an eye on some key aspects. The performance is monitored to detect if there are slow response times and or errors. This will help us find issues with the model, which then can be taken care of. Furthermore, by looking at the performance, it is possible to detect if there is a drift in the data in any way, which is likely to happen since new pictures would have other resolutions. The resources may also be monitored to ensure that the capacity is not reached regarding latency and throughput such that the model should be optimized. 
 
 ### Question 24
 
@@ -452,7 +508,7 @@ Most debugging was done through the different IDEs which the group members used.
 >
 > Answer:
 
---- question 24 fill here ---
+During the project, an alleged bug occurred where all our student billing accounts got emptied overnight (no VM instances were active and no spend history). Therefore, two of the group members created trial accounts with 300$ each of which around 60$ was spent. 
 
 ## Overall discussion of project
 
@@ -504,4 +560,11 @@ Most debugging was done through the different IDEs which the group members used.
 >
 > Answer:
 
---- question 27 fill here ---
+Student s194237 was mainly in charge of” Development environment” and “Debugging, Profiling and Logging”
+Student s194246 was mainly in charge of “The cloud”
+Student s194247 was mainly in charge of “Organization and version control” and “Reproducibility”
+Student s194249 was mainly in charge of “Deployment”
+Student s194267 was mainly in charge of “Continuous Integration”
+
+All members contributed to code by helping each other out and solving issues together when they arose.
+
