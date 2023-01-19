@@ -67,6 +67,10 @@ We intend to use the model [ConvNeXt V2: Co-designing and Scaling ConvNets with 
 
 [<img src="reports/figures/mlops_pipeline.png">](reports/figures/ops_lel.md)
 
+<p align="center">
+<em>Hint: Try clicking the image :)</em>
+</p>
+
 
 # Installing and running <a name="install-and-run"></a>
 
