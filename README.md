@@ -35,7 +35,7 @@ Dennis Chenxi Zhuang (s194247), Kristoffer Marboe (s194249) and Kasper Niklas Kj
 7. [Deploying the model](#deploying)
     1. [Local Deployment](#deploying-locally)
     2. [Cloud Deployment](#deploying-cloud)
-
+8. [Report and checklist](#report_n_checklist)
 ## Overall goals of the project <a name="projectgoal"></a>
 The goal of this project is to use the image classification model [ConvNeXt V2](https://arxiv.org/abs/2301.00808) to classify a 10 class animal data set from [Animals - V2](https://www.kaggle.com/datasets/utkarshsaxenadn/animal-image-classification-dataset).
 
@@ -157,6 +157,7 @@ curl -m 70 -X POST https://europe-west1-eternal-seeker-374308.cloudfunctions.net
 ```
 
 --------
+# Report and Checklist <a name="report_n_checklist"></a>
 See [report and checklist](reports/README.md).
 
 <p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. </small></p>
