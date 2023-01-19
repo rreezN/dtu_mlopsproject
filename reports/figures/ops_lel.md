@@ -1,1 +1,1 @@
- <img src="../reports/figures/mlops_pipeline_lel.png"/>
+ <img src="/reports/figures/mlops_pipeline_lel.png"/>
