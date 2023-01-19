@@ -529,7 +529,16 @@ During the project, an alleged bug occurred where all our student billing accoun
 >
 > Answer:
 
---- question 25 fill here ---
+The Machine Learning Operations Pipeline is split into two sides: The developer and the user.
+The development environment is where the model is being developed. This environment points to a Local data storage where the data used for training the model is stored. The Local data storage points to a Data version control which is used to keep track of different versions of the data and manage the data pipeline. The Data version control points to a Bucket, which is used to store the data in the cloud. The bucket is connected to the Cloud deployment, where the model is deployed to a cloud-based server.
+
+The development environment also points to GitHub, a web-based platform used for version control and collaborative development. GitHub points to the data version control, which is used to keep track of different versions of the model code and manage the development pipeline.
+GitHub also points to GitHub Actions, which is a feature that allows users to automate tasks such as building, testing, and deploying code.
+
+GitHub also points to a Container Registry, which stores and distributes containers, such as Docker images. The Container Registry points to Vertex AI, a platform for managing machine learning models, and it is connected to both Bucket and WandB for data storage and monitoring.
+GitHub also points to Docker, a platform for building, shipping, and running distributed applications in containers.
+
+Finally, there is a User who is interacting with the model, this user points to the Server, Docker and GitHub. This means that the user can interact with the deployed model on the server as well as using the Docker container and clone the repository for local running through the GitHub platform.
 
 ### Question 26
 
@@ -543,7 +552,11 @@ During the project, an alleged bug occurred where all our student billing accoun
 >
 > Answer:
 
---- question 26 fill here ---
+By far, the biggest struggles of the project were building the docker images and integrating the model into google cloud platforming. We spend a disproportionate amount of time getting everything set up to run in the cloud compared to getting the model running locally, setting up CI, ensuring reproducibility etc.
+It turns out that building docker images through wsl uses A LOT of memory. This slowed the process of building and pushing images down in the beginning, but when we figured out how to limit the amount of ram wsl has access to, this problem was solved.
+The most significant issue with the cloud integration was trying to enable training on GPU. We never actually managed to get it up and running, mostly due to the fact that the 50$ credits expired over night and free accounts have limited access to GPU-machines. Training on CPU worked fine, however, it meant that we had to significantly reduce the amount of data we trained on.
+Another general challenge was the lack of transparency and understandability of the underlying logic behind downloading and configuring our machines to work with third-party software. The solution was, of course, to google the error and then find suitable answers written by wizards, but in general, it was unclear why a solution would fix an error, and this black box working often led to some confusion and frustration. It sometimes felt like fumbling forward blindly and hoping we did not reach a dead end. 
+
 
 ### Question 27
 
