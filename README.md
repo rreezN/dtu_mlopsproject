@@ -65,7 +65,7 @@ We intend to use the model [ConvNeXt V2: Co-designing and Scaling ConvNets with 
 
 # Project flowchart <a name="project-flowchart"></a>
 
-[<img src="reports/figures/mlops_pipeline.png">](reports/figures/mlops_pipeline_lel.png)
+[<img src="reports/figures/mlops_pipeline.png">](reports/figures/ops_lel.md)
 
 
 # Installing and running <a name="install-and-run"></a>
