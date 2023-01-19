@@ -163,7 +163,7 @@ To manage the dependencies in our project, we used the pipreqs package. This ens
 > *experiments.*
 > Answer:
 
-To adhere with the cookiecutter template, all code in the project is contained within the src/ folder. All files which are initially present within the template have been altered, namely: make_data.py, model.py, train_model.py and predict_model.py. We also added a new file, rename_files.py, to src/data/ since the raw-data from kaggle included files with spaces in the names which caused problems when locating all image files in subfolders when running make_dataset.py to create processed data. We also added a config-files for hydra located in a config/ folder within src/models/. While implementing unit-tests of the code, a tests/ folder was created where test files for the data and model could be stored. To deploy the model using images, a `deployment/` folder was created, containing the fastapi app files.
+To adhere with the cookiecutter template, all code in the project is contained within the `src/` folder. All files which are initially present within the template have been altered, namely: `make_data.py`, `model.py`, `train_model.py` and `predict_model.py`. We also added a new file, `rename_files.py`, to `src/data/` since the raw-data from kaggle included files with spaces in the names which caused problems when locating all image files in subfolders when running `make_dataset.py` to create processed data. We also added a config-files for hydra located in a config/ folder within `src/models/`. While implementing unit-tests of the code, a `tests/` folder was created where test files for the data and model could be stored. To deploy the model using images, a `deployment/` folder was created, containing the `FastAPI` app files.
 
 ### Question 6
 
@@ -243,7 +243,7 @@ Yes we used both branches and pull requests in our workflow. Branches were creat
 >
 > Answer:
 
-Yes DVC was used to manage the data. Since the data used in this project is 224x224 images and there are approximately 20.000 of them, the resulting data files take up several Gbs of space. Therefore, sharing the data between members of the group and controlling that it is consistent for all members would be extremely cumbersome without DVC. With DVC retrieving the data was a matter of writing “dvc pull” and waiting a few minutes. It also is essential for ensuring reproducibility. If a new user joins the project, the user can be certain that the data retrieved is exactly as it should be.
+Yes DVC was used to manage the data. Since the data used in this project is 224x224 images and there are approximately 20.000 of them, the resulting data files take up several Gbs of space. Therefore, sharing the data between members of the group and controlling that it is consistent for all members would be extremely cumbersome without DVC. With DVC retrieving the data was a matter of writing `dvc pull` and waiting a few minutes. It also is essential for ensuring reproducibility. If a new user joins the project, the user can be certain that the data retrieved is exactly as it should be.
 
 ### Question 11
 
