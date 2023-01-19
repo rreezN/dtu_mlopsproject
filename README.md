@@ -29,13 +29,14 @@ Dennis Chenxi Zhuang (s194247), Kristoffer Marboe (s194249) and Kasper Niklas Kj
 3. [How do you intend to include the framework in your project?](#framework1)
 4. [What data are you going to run on (initially)?](#data)
 5. [What deep learning models do you expect to use?](#deeplearning-model)
-6. [Installing and running the model](#install-and-run)
+6. [Project flowchart](#project-flowchart)
+7. [Installing and running the model](#install-and-run)
     1. [How to install](#how-to-install)
     2. [How to run](#how-to-run)
-7. [Deploying the model](#deploying)
+8. [Deploying the model](#deploying)
     1. [Local Deployment](#deploying-locally)
     2. [Cloud Deployment](#deploying-cloud)
-8. [Report and checklist](#report_n_checklist)
+9. [Report and checklist](#report_n_checklist)
 ## Overall goals of the project <a name="projectgoal"></a>
 The goal of this project is to use the image classification model [ConvNeXt V2](https://arxiv.org/abs/2301.00808) to classify a 10 class animal data set from [Animals - V2](https://www.kaggle.com/datasets/utkarshsaxenadn/animal-image-classification-dataset).
 
@@ -61,6 +62,11 @@ The images vary in size and thus need to be transformed to a standard size, cons
 
 ## What deep learning models do you expect to use? <a name="deeplearning-model"></a>
 We intend to use the model [ConvNeXt V2: Co-designing and Scaling ConvNets with Masked Autoencoders](https://arxiv.org/abs/2301.00808), which is a recent update to the original ConvNeXt. The model contains pre-trained models of different sizes, of which we will be using the pretrained 3.7 million parameter model, Atto.
+
+# Project flowchart <a name="project-flowchart"></a>
+
+[<img src="reports/figures/mlops_pipeline.png">](reports/figures/mlops_pipeline_lel.png)
+
 
 # Installing and running <a name="install-and-run"></a>
 
